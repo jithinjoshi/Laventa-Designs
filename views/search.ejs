@@ -1,0 +1,396 @@
+<%- include('./partials/header.ejs') %>
+
+    <!-- Header -->
+    <header class="header-v4">
+        <%- include('./partials/user-header.ejs') %>
+    </header>
+
+    <div class="container">
+
+
+
+        <!-- Cart -->
+        <div class="flex-w flex-sb-m p-b-52">
+            <div class="flex-w flex-l-m filter-tope-group m-tb-10">
+                <h5>Search Results</h5>
+            </div>
+        </div>
+
+
+
+        <!-- Product -->
+        <div class="row isotope-grid">
+
+            <!-- Block2 -->
+
+            <% searchResult.forEach(product=> { %>
+
+
+                <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+                    <div class="block2">
+                        <div class="block2-pic hov-img0">
+                            <img src="/uploads/<%= product.image[0].filename %> " alt="IMG-PRODUCT">
+
+                            <% if(product.stock !==0 && user){ %>
+                                <button
+                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04"
+                                    onclick="addToCart('<%= product._id%>')">add to cart</button>
+                                <% } %>
+
+
+
+
+                        </div>
+
+                        <div class="block2-txt flex-w flex-t p-t-14">
+                            <div class="block2-txt-child1 flex-col-l ">
+                                <% if(product.stock !==0){ %>
+                                    <a href="/productdetails/<%= product._id  %> "
+                                        class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                        <%= product.name %>
+                                    </a>
+                                    <% }else{ %>
+                                        <a class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                            <%= product.name %>
+                                        </a>
+                                        <span class="text-danger">Out of stock</span>
+                                        <% } %>
+
+                                            <div class="dis-flex">
+                                                <% if(product.discount !=0){ %>
+                                                    <span class="stext-105 cl3 font-weight-bold">
+                                                        ₹<%= product.offerPrice %>
+                                                    </span>
+                                                    <span class="stext-105 cl3 ml-5"
+                                                        style="text-decoration:line-through;">₹<%= product.price %>
+                                                    </span>
+                                                    <span class="text-success stext-105 cl3 ml-5">
+                                                        <%= product.discount %> % off
+                                                    </span>
+                                                    <% }else{ %>
+                                                        <span class="stext-105 cl3 font-weight-bold">
+                                                            ₹<%= product.price %>
+                                                        </span>
+                                                        <% } %>
+
+                                            </div>
+
+                            </div>
+
+
+
+                            <div class="block2-txt-child2 flex-r p-t-3">
+                                <a class="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
+                                    onclick="addToWishlist('<%= product._id %>')">
+                                    <img class="icon-heart1 dis-block trans-04" src="/images/icons/icon-heart-01.png"
+                                        alt="ICON">
+                                    <img class="icon-heart2 dis-block trans-04 ab-t-l"
+                                        src="/images/icons/icon-heart-02.png" alt="ICON">
+                                </a>
+                            </div>
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+
+
+
+
+
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="bg3 p-t-75 p-b-32">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-lg-3 p-b-50">
+                    <h4 class="stext-301 cl0 p-b-30">
+                        Categories
+                    </h4>
+
+                    <ul>
+                        <li class="p-b-10">
+                            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                Women
+                            </a>
+                        </li>
+
+                        <li class="p-b-10">
+                            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                Men
+                            </a>
+                        </li>
+
+                        <li class="p-b-10">
+                            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                Shoes
+                            </a>
+                        </li>
+
+                        <li class="p-b-10">
+                            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                Watches
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-sm-6 col-lg-3 p-b-50">
+                    <h4 class="stext-301 cl0 p-b-30">
+                        Help
+                    </h4>
+
+                    <ul>
+                        <li class="p-b-10">
+                            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                Track Order
+                            </a>
+                        </li>
+
+                        <li class="p-b-10">
+                            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                Returns
+                            </a>
+                        </li>
+
+                        <li class="p-b-10">
+                            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                Shipping
+                            </a>
+                        </li>
+
+                        <li class="p-b-10">
+                            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                FAQs
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-sm-6 col-lg-3 p-b-50">
+                    <h4 class="stext-301 cl0 p-b-30">
+                        GET IN TOUCH
+                    </h4>
+
+                    <p class="stext-107 cl7 size-201">
+                        Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us
+                        on (+1) 96 716 6879
+                    </p>
+
+                    <div class="p-t-27">
+                        <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+
+                        <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+
+                        <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                            <i class="fa fa-pinterest-p"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-3 p-b-50">
+                    <h4 class="stext-301 cl0 p-b-30">
+                        Newsletter
+                    </h4>
+
+                    <form>
+                        <div class="wrap-input1 w-full p-b-4">
+                            <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email"
+                                placeholder="email@example.com">
+                            <div class="focus-input1 trans-04"></div>
+                        </div>
+
+                        <div class="p-t-18">
+                            <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
+                                Subscribe
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="p-t-40">
+                <div class="flex-c-m flex-w p-b-18">
+                    <a href="#" class="m-all-1">
+                        <img src="/images/icons/icon-pay-01.png" alt="ICON-PAY">
+                    </a>
+
+                    <a href="#" class="m-all-1">
+                        <img src="/images/icons/icon-pay-02.png" alt="ICON-PAY">
+                    </a>
+
+                    <a href="#" class="m-all-1">
+                        <img src="/images/icons/icon-pay-03.png" alt="ICON-PAY">
+                    </a>
+
+                    <a href="#" class="m-all-1">
+                        <img src="/images/icons/icon-pay-04.png" alt="ICON-PAY">
+                    </a>
+
+                    <a href="#" class="m-all-1">
+                        <img src="/images/icons/icon-pay-05.png" alt="ICON-PAY">
+                    </a>
+                </div>
+
+                <p class="stext-107 cl6 txt-center">
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;
+                    <script>document.write(new Date().getFullYear());</script> All rights reserved |Made with <i
+                        class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
+                        target="_blank">Colorlib</a> &amp; distributed by <a href="https://themewagon.com"
+                        target="_blank">ThemeWagon</a>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+
+                </p>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <!--===============================================================================================-->
+    <script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/vendor/bootstrap/js/popper.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/vendor/select2/select2.min.js"></script>
+    <script>
+        $(".js-select2").each(function () {
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2')
+            });
+        })
+    </script>
+    <!--===============================================================================================-->
+    <script src="/vendor/daterangepicker/moment.min.js"></script>
+    <script src="/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="/vendor/slick/slick.min.js"></script>
+    <script src="/js/slick-custom.js"></script>
+    <!--===============================================================================================-->
+    <script src="/vendor/parallax100/parallax100.js"></script>
+    <script>
+        $('.parallax100').parallax100();
+    </script>
+    <!--===============================================================================================-->
+    <script src="/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+    <script>
+        $('.gallery-lb').each(function () { // the containers for all your galleries
+            $(this).magnificPopup({
+                delegate: 'a', // the selector for gallery item
+                type: 'image',
+                gallery: {
+                    enabled: true
+                },
+                mainClass: 'mfp-fade'
+            });
+        });
+    </script>
+    <!--===============================================================================================-->
+    <script src="/vendor/isotope/isotope.pkgd.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/vendor/sweetalert/sweetalert.min.js"></script>
+
+    <!--===============================================================================================-->
+    <script src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script>
+        $('.js-pscroll').each(function () {
+            $(this).css('position', 'relative');
+            $(this).css('overflow', 'hidden');
+            var ps = new PerfectScrollbar(this, {
+                wheelSpeed: 1,
+                scrollingThreshold: 1000,
+                wheelPropagation: false,
+            });
+
+            $(window).on('resize', function () {
+                ps.update();
+            })
+        });
+    </script>
+
+    <script>
+        function addToCart(prodId) {
+            $.ajax({
+                url: '/cart/' + prodId,
+                method: 'get',
+                success: (response) => {
+                    if (response.status) {
+                        let count = $("#cart-count").html()
+                        count = parseInt(count) + 1;
+                        $("#cart-count").html(count)
+                        // Swal.fire({
+                        // 	icon: 'success',
+                        // 	title: 'Item added to cart',
+                        // 	showConfirmButton: false,
+                        // 	timer: 2000
+                        // })
+
+                        swal({
+                            title: "Good job!",
+                            text: "Item added to the Cart!",
+                            icon: "success",
+                            button:false,
+                            timer: 1000
+                        });
+
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'out of stock',
+                        })
+                    }
+                }
+            })
+        }
+    </script>
+
+    <!-- wishlist -->
+    <script>
+        function addToWishlist(prodId) {
+            $.ajax({
+                url: '/wishlist/' + prodId,
+                method: 'get',
+                success: (response) => {
+                    if (response.status) {
+                        let count = $("#wishlist-count").html()
+                        count = parseInt(count) + 1;
+                        $("#wishlist-count").html(count)
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Item added to wishlist',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+
+                    }
+                }
+            })
+        }
+    </script>
+    <!--===============================================================================================-->
+    <script src="/js/main.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    </body>
+
+    </html>

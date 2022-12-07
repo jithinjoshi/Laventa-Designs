@@ -1,0 +1,337 @@
+<%- include('../partials/admin.ejs') %> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+<%- include('../partials/admin-dashboard.ejs') %> 
+  
+    <style>
+    .bg{background-color: #fff;  width:100%; height:100vh;}   
+    h1{ margin-top: 10vh;font-family:oswald; color: #172A3A; }
+    .form-group {font-family: Oswald ;margin-top: 0px;}    
+    #mlot { margin-bottom: 10px;}
+    .form-container {border:1px solid #000; padding: 50px 60px;
+     -webkit-box-shadow: -1px 4px 45px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 4px 45px -7px rgba(0,0,0,0.75);
+    box-shadow: -1px 4px 45px -7px rgba(0,0,0,0.75);};
+
+    html * {
+	 box-sizing: border-box;
+}
+ p {
+	 margin: 0;
+}
+ .upload__box {
+	 padding-top: 30px;
+}
+ .upload__inputfile {
+	 width: 0.1px;
+	 height: 0.1px;
+	 opacity: 0;
+	 overflow: hidden;
+	 position: absolute;
+	 z-index: -1;
+}
+ .upload__btn {
+	 display: inline-block;
+	 font-weight: 600;
+	 color: #fff;
+	 text-align: center;
+	 min-width: 116px;
+	 padding: 5px;
+	 transition: all 0.3s ease;
+	 cursor: pointer;
+	 border: 2px solid;
+	 background-color: #4045ba;
+	 border-color: #4045ba;
+	 border-radius: 10px;
+	 line-height: 26px;
+	 font-size: 14px;
+}
+ .upload__btn:hover {
+	 background-color: unset;
+	 color: #4045ba;
+	 transition: all 0.3s ease;
+}
+ .upload__btn-box {
+	 margin-bottom: 10px;
+}
+ .upload__img-wrap {
+	 display: flex;
+	 flex-wrap: wrap;
+	 margin: 0 -10px;
+}
+ .upload__img-box {
+	 width: 60px;
+	 padding: 0 10px;
+	 margin-bottom: 12px;
+}
+ .upload__img-close {
+	 width: 9px;
+	 height: 9px;
+	 border-radius: 50%;
+	 background-color: rgba(0, 0, 0, 0.5);
+	 position: absolute;
+	 top: 2px;
+	 right: 6px;
+	 text-align: center;
+	 line-height: 24px;
+	 z-index: 1;
+	 cursor: pointer;
+}
+ .upload__img-close:after {
+	 content: '\2716';
+	 font-size: 14px;
+	 color: white;
+}
+ .img-bg {
+	 background-repeat: no-repeat;
+	 background-position: center;
+	 background-size: cover;
+	 position: relative;
+	 padding-bottom: 100%;
+}
+    </style>
+<div class="container-fluid" style="margin-left: 7%;">
+
+         
+        <h1 class="text-center "> ADD PRODUCTS </h1>   
+        
+    <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-12"></div>
+
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <% if(message.length > 0){ %>
+            <div class="text-danger"><%= message %> </div>
+
+          <% } %> 
+
+                <form class="form-container" method="post" action="/admin/addProduct" enctype="multipart/form-data">
+                  <!-- <h2 class="text-center"> PRODUCT DETAILS </h2>  -->
+                        <div class="form-group mt-1">
+                          <label for="mid">PRODUCT NAME</label>
+                          
+                          <input type="text" class="form-control" id="name" name="name" placeholder=" Enter product name" onkeyup="validName()">
+                          <span id="names" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mt-3">
+                          <label for="mdate">PRODUCT CATEGORY</label>
+                          <select name="category" class="form-control">
+                            <%categories.forEach(category=> { %>
+                              <option value=<%= category.category %>><%= category.category %> </option>
+                              <% }); %>
+                          </select>
+                        </div>
+                        <div class="form-group  mt-3">
+                            <label for="mlot">PRODUCT PRICE</label>
+                            <input type="number" class="form-control" name="price" id="price"  placeholder=" Enter product price" onkeyup="validPrice()">
+                            <span id="prices" class="text-danger"></span>
+                        </div>
+                        <div class="form-group  mt-3">
+                          <label for="mlot">DISCOUNT PRICE</label>
+                          <input type="number" id="discount" class="form-control" min="0" max="100" placeholder=" Enter discount price" name="discounts" onkeyup="validDiscount()">
+                          <span id="discounts" class="text-danger"></span>
+                        </div>
+                        <div class="form-group  mt-3">
+                            <label>PRODUCT DESCRIPTION</label>
+                            <input type="text" class="form-control"  name="description" id="description" placeholder=" Enter product description" onkeyup="validDescription()">
+                            <span id="descriptions" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group  mt-3">
+                          <label for="mlot">PRODUCT STOCK</label>
+                          <input type="number" id="stock" class="form-control" placeholder=" Enter product stock " name="stock" onkeyup="validStock()">
+                          <span id="stocks" class="text-danger"></span>
+                        </div>
+                        <!-- <div class="form-group mt-3">
+                            <label for="mdate">PRODUCT IMAGE</label>
+                            <img id="imgView" src="" alt=""   style="height:100px ;height:50px ;margin-bottom: 15px;">
+                            <input type="file" class="form-control" id="mdate" onchange="viewImage(event)" name="file" multiple required >
+                        </div> -->
+                        <div class="upload__box">
+                          <div class="upload__btn-box">
+                            <label class="upload__btn">
+                              <p>Upload images</p>
+                              <input name="file" type="file" multiple="" data-max_length="4" class="upload__inputfile">
+                            </label>
+                          </div>
+                          <div class="upload__img-wrap"></div>
+                        </div>
+                        <button type="submit" onclick="return validation()" class="btn btn-primary btn-block mt-2">SUBMIT</button>
+                      </form>
+
+
+        </div>
+    </div>
+   <div class="col-md-4 col-sm-4 col-xs-12"></div>
+        
+</div>
+<script>
+      
+  function viewImage(event) {
+      document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+  }
+  
+</script>
+<script defer src="https://cdn.crop.guide/loader/l.js?c=TXSZKK"></script>
+
+<script>
+  var proNames = document.getElementById('names');
+  var proCategory = document.getElementById('categories');
+  var proPrices = document.getElementById('prices');
+  var proDescriptions = document.getElementById('descriptions');
+  var proDiscounts = document.getElementById('discounts');
+  var proStock = document.getElementById('stocks');
+
+  function validName(){
+    const name = document.getElementById('name').value;
+
+    if(name == ""){
+      proNames.innerHTML = "Enter The Product Name"
+      return false
+    }
+
+    proNames.innerHTML = null;
+    return true;
+  }
+
+  // function validCategory(){
+  //   const category = document.getElementById('category').value;
+
+  //   if(category == ""){
+  //     proCategory.innerHTML = ""
+  //   }
+  // }
+
+  function validPrice(){
+    const price = document.getElementById('price').value
+
+    if(price == ""){
+      proPrices.innerHTML = "Enter the price"
+      return false
+    }
+
+    proPrices.innerHTML = null;
+    return true;
+  }
+
+  function validDiscount(){
+    const discount = document.getElementById('discount').value
+
+    if(discount == ""){
+      proDiscounts.innerHTML = "Enter the discount price in percentage"
+      return false
+    }
+
+    if(discount < 0 || discount>100){
+      proDiscounts.innerHTML = 'Enter the value in percentage between 0 and 100 in percentage'
+      return false
+    }
+
+    proDiscounts.innerHTML = null;
+    return true;
+  }
+
+  function validDescription(){
+     const description = document.getElementById('description').value
+
+     if(description ==""){
+      proDescriptions.innerHTML = "Enter the description"
+      return false;
+     }
+
+     if(description.length > 20){
+      proDescriptions.innerHTML = "Maximum limit exceeded"
+      return false;
+     }
+
+     proDescriptions.innerHTML = null;
+     return true;
+  }
+
+  function validStock(){
+    const stock = document.getElementById('stock').value
+
+    if(stock == ""){
+      proStock.innerHTML = "Enter the stock";
+      return false;
+    }
+
+    proStock.innerHTML = null;
+    return true;
+  }
+
+  function validation(){
+    if(!validName() && !validDescription() && !validPrice() && !validDiscount() && !validStock){
+      return false
+    }else if(!validName() || !validDescription() || !validPrice() || !validDiscount() || !validStock){
+      return false
+    }else{
+      return true
+    }
+  }
+</script>
+
+<script>
+  jQuery(document).ready(function () {
+  ImgUpload();
+});
+
+function ImgUpload() {
+  var imgWrap = "";
+  var imgArray = [];
+
+  $('.upload__inputfile').each(function () {
+    $(this).on('change', function (e) {
+      imgWrap = $(this).closest('.upload__box').find('.upload__img-wrap');
+      var maxLength = $(this).attr('data-max_length');
+
+      var files = e.target.files;
+      var filesArr = Array.prototype.slice.call(files);
+      var iterator = 0;
+      filesArr.forEach(function (f, index) {
+
+        if (!f.type.match('image.*')) {
+          return;
+        }
+
+        if (imgArray.length > maxLength) {
+          return false
+        } else {
+          var len = 0;
+          for (var i = 0; i < imgArray.length; i++) {
+            if (imgArray[i] !== undefined) {
+              len++;
+            }
+          }
+          if (len > maxLength) {
+            return false;
+          } else {
+            imgArray.push(f);
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              var html = "<div class='upload__img-box'><div style='background-image: url(" + e.target.result + ")' data-number='" + $(".upload__img-close").length + "' data-file='" + f.name + "' class='img-bg'><div class='upload__img-close'></div></div></div>";
+              imgWrap.append(html);
+              iterator++;
+            }
+            reader.readAsDataURL(f);
+          }
+        }
+      });
+    });
+  });
+
+  $('body').on('click', ".upload__img-close", function (e) {
+    var file = $(this).parent().data("file");
+    for (var i = 0; i < imgArray.length; i++) {
+      if (imgArray[i].name === file) {
+        imgArray.splice(i, 1);
+        break;
+      }
+    }
+    $(this).parent().parent().remove();
+  });
+}
+</script>
+
+<%- include('../partials/footer.ejs') %> 

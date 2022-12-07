@@ -1,0 +1,624 @@
+<%- include('./partials/header.ejs') %>
+    <link rel="stylesheet" href="/singleproduct/assets/css/bootstrap.min.css">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="/singleproduct/assets/css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <!-- Header -->
+    <%- include('./partials/user-header.ejs') %>
+
+
+        <main class="main">
+            <div class="page-header text-center">
+    </div><!-- End .page-header -->
+    <div class=" page-header text-center"
+                style="background-image: url('/singleproduct/assets/images/page-header-bg.jpg')">
+                <div class="container">
+                    <h1 class="page-title">My Account<span></span></h1>
+                </div><!-- End .container -->
+            </div><!-- End .page-header -->
+
+            <div class="page-content">
+                <div class="dashboard">
+                    <div class="container">
+                        <div class="row">
+                            <aside class="col-md-4 col-lg-3 mt-3">
+                                <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="tab-dashboard-link" data-toggle="tab"
+                                            href="#tab-dashboard" role="tab" aria-controls="tab-dashboard"
+                                            aria-selected="true">Dashboard</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders"
+                                            role="tab" aria-controls="tab-orders" aria-selected="false">Wallet</a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address"
+                                            role="tab" aria-controls="tab-address" aria-selected="false">Adresses</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account"
+                                            role="tab" aria-controls="tab-account" aria-selected="false">Account
+                                            Details</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/signout">Sign Out</a>
+                                    </li>
+                                </ul>
+                            </aside><!-- End .col-lg-3 -->
+
+                            <div class="col-md-8 col-lg-9">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel"
+                                        aria-labelledby="tab-dashboard-link">
+
+
+                                        <div class="row mt-4 ">
+                                            <div class="col mb-3">
+                                                <div class="card" style="background-color:rgba(134, 134, 134, 0.171);">
+                                                    <div class="card-body">
+                                                        <div class="e-profile">
+                                                            <div class="row">
+
+                                                                <div
+                                                                    class="col d-flex flex-column flex-sm-row justify-content-center mb-3">
+                                                                    <div class="text-center  mb-2 mb-sm-0">
+                                                                        <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">
+                                                                            <%= currentUser.username %>
+                                                                        </h4>
+                                                                        <p class="mb-0">
+                                                                            <%= currentUser.email %>
+                                                                        </p>
+                                                                        <div><small>Joined on<span
+                                                                                    style="font-weight:bold;">
+                                                                                    <%= date %>
+                                                                                </span></small></div>
+                                                                        <div class="mt-2">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- .End .tab-pane -->
+
+                                    <!-- MY WALLET -->
+
+                                    <div class="tab-pane fade" id="tab-orders" role="tabpanel"
+                                        aria-labelledby="tab-orders-link">
+
+                                        <div class="row mt-4 ">
+                                            <div class="col mb-3">
+                                                <div class="card" style="background-color:rgba(134, 134, 134, 0.171);">
+                                                    <div class="card-body">
+                                                        <div class="e-profile">
+                                                            <div class="row">
+
+                                                                <div
+                                                                    class="col d-flex flex-column flex-sm-row justify-content-center mb-3">
+                                                                    <div class="text-center  mb-2 mb-sm-0">
+                                                                        <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">
+                                                                            MY WALLET
+                                                                        </h4>
+                                                                        <p class="mb-0">
+                                                                            <%= currentUser.email %>
+                                                                        </p>
+
+                                                                        <p class="mb-0">
+                                                                            Balance : <span class="font-weight-bold">₹<%= currentUser.wallet %> </span>
+                                                                        </p>
+                                                                    
+                                                                        <div class="mt-2">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="tab-pane fade" id="tab-downloads" role="tabpanel"
+                                        aria-labelledby="tab-downloads-link">
+                                        <p>No downloads available yet.</p>
+                                        <a href="category.html" class="btn btn-outline-primary-2"><span>GO SHOP</span><i
+                                                class="icon-long-arrow-right"></i></a>
+                                    </div> -->
+
+                                    <div class="tab-pane fade" id="tab-address" role="tabpanel"
+                                        aria-labelledby="tab-address-link">
+                                        <h4 class="m-5">Your Addresses</h4>
+
+
+                                        <div class="row m-5">
+                                            <% addresses.forEach(address => { %>
+                                                <div class="col-lg-6">
+                                                    <div class="card card-dashboard"
+                                                        style="background-color:rgba(134, 134, 134, 0.171)">
+                                                        <div class="card-body">
+                                                            <h3 class="card-title">Shipping Address</h3>
+                                                            <!-- End .card-title -->
+                                                            <p class="font-weight-bold">
+                                                                <%= address.fullname %>
+                                                            </p>
+                                                            <p>
+                                                                <%= address.address %>
+                                                            </p>
+                                                            <p>
+                                                                <%= address.city %>
+                                                            </p>
+                                                            <p>
+                                                                <%= address.pin %>
+                                                            </p>
+                                                            <p>Phone Number:<%= address.tel %>
+                                                            </p>
+
+                                                            <div>
+                                                                <a href="/edit-address/<%= address._id %> " class="text-primary"><i class="icon-edit"></i> Edit Address</a>
+                                                                <form action="/delete-address/<%= address._id%>" method="post" id="deleteAddress">
+                                                                    <button style="display: inline-block ;"class="text-danger"><i class="fa fa-trash"></i>Delete Address</button>
+                                                                </form>
+
+
+
+                                                            </div>
+                                                        </div><!-- End .card-body -->
+                                                    </div><!-- End .card-dashboard -->
+                                                </div><!-- End .col-lg-6 -->
+                                                <% }); %>
+                                        </div><!-- End .row -->
+
+
+
+                                    </div><!-- .End .tab-pane -->
+
+                                    <div class="tab-pane fade" id="tab-account" role="tabpanel"
+                                        aria-labelledby="tab-account-link">
+                                        <form id="form-data" action="/profile" method="post">
+
+
+                                            <label>Username</label>
+                                            <span id="names" class="text-danger" style="display:block;"></span>
+                                            <input type="text" class="form-control" id="name" name="username"
+                                                value="<%= currentUser.username %> " onkeyup="validName()">
+
+
+
+                                            <label>Email address</label>
+                                            <span id="emails" class="text-danger" style="display:block;"></span>
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                value="<%= currentUser.email %> " onkeyup="validEmail()" required>
+
+
+                                            <label>Mobile Number</label>
+                                            <span id="phones" class="text-danger" style="display:block;"></span>
+                                            <input type="number" class="form-control" id="phone" name="mobile"
+                                                value="<%= currentUser.mobile %>" onkeyup="validPhone()" required>
+
+
+                                            <label>New password</label>
+                                            <span id="passwords" class="text-danger" style="display:block;"></span>
+                                            <input type="password" class="form-control" id="password" name="newPassword"
+                                                onkeyup="validPassowrd()">
+
+
+                                            <label>Confirm new password</label>
+                                            <input type="password" name="comparePassword" id="compare" class="form-control mb-2">
+
+                                            <button class="btn btn-outline-primary-2" onclick="return validation()">
+                                                <span>SAVE CHANGES</span>
+                                                <i class="icon-long-arrow-right"></i>
+                                            </button>
+                                        </form>
+                                    </div><!-- .End .tab-pane -->
+                                </div>
+                            </div><!-- End .col-lg-9 -->
+                        </div><!-- End .row -->
+                    </div><!-- End .container -->
+                </div><!-- End .dashboard -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+
+        <footer class="bg3 p-t-75 p-b-32">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-lg-3 p-b-50">
+                        <h4 class="stext-301 cl0 p-b-30">
+                            Categories
+                        </h4>
+
+                        <ul>
+                            <li class="p-b-10">
+                                <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                    Women
+                                </a>
+                            </li>
+
+                            <li class="p-b-10">
+                                <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                    Men
+                                </a>
+                            </li>
+
+                            <li class="p-b-10">
+                                <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                    Shoes
+                                </a>
+                            </li>
+
+                            <li class="p-b-10">
+                                <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                    Watches
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-3 p-b-50">
+                        <h4 class="stext-301 cl0 p-b-30">
+                            Help
+                        </h4>
+
+                        <ul>
+                            <li class="p-b-10">
+                                <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                    Track Order
+                                </a>
+                            </li>
+
+                            <li class="p-b-10">
+                                <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                    Returns
+                                </a>
+                            </li>
+
+                            <li class="p-b-10">
+                                <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                    Shipping
+                                </a>
+                            </li>
+
+                            <li class="p-b-10">
+                                <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                    FAQs
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-3 p-b-50">
+                        <h4 class="stext-301 cl0 p-b-30">
+                            GET IN TOUCH
+                        </h4>
+
+                        <p class="stext-107 cl7 size-201">
+                            Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call
+                            us on (+1) 96 716 6879
+                        </p>
+
+                        <div class="p-t-27">
+                            <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+
+                            <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+
+                            <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                                <i class="fa fa-pinterest-p"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-3 p-b-50">
+                        <h4 class="stext-301 cl0 p-b-30">
+                            Newsletter
+                        </h4>
+
+                        <form>
+                            <div class="wrap-input1 w-full p-b-4">
+                                <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email"
+                                    placeholder="email@example.com">
+                                <div class="focus-input1 trans-04"></div>
+                            </div>
+
+                            <div class="p-t-18">
+                                <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
+                                    Subscribe
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="p-t-40">
+                    <div class="flex-c-m flex-w p-b-18">
+                        <a href="#" class="m-all-1">
+                            <img src="images/icons/icon-pay-01.png" alt="ICON-PAY">
+                        </a>
+
+                        <a href="#" class="m-all-1">
+                            <img src="images/icons/icon-pay-02.png" alt="ICON-PAY">
+                        </a>
+
+                        <a href="#" class="m-all-1">
+                            <img src="images/icons/icon-pay-03.png" alt="ICON-PAY">
+                        </a>
+
+                        <a href="#" class="m-all-1">
+                            <img src="images/icons/icon-pay-04.png" alt="ICON-PAY">
+                        </a>
+
+                        <a href="#" class="m-all-1">
+                            <img src="images/icons/icon-pay-05.png" alt="ICON-PAY">
+                        </a>
+                    </div>
+
+                    <p class="stext-107 cl6 txt-center">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;
+                        <script>document.write(new Date().getFullYear());</script> All rights reserved | Made with <i
+                            class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
+                            target="_blank">Colorlib</a> &amp; distributed by <a href="https://themewagon.com"
+                            target="_blank">ThemeWagon</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+
+
+
+
+
+        <!--===============================================================================================-->
+        <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/animsition/js/animsition.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/bootstrap/js/popper.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/select2/select2.min.js"></script>
+        <script>
+            $(".js-select2").each(function () {
+                $(this).select2({
+                    minimumResultsForSearch: 20,
+                    dropdownParent: $(this).next('.dropDownSelect2')
+                });
+            })
+        </script>
+        <!--===============================================================================================-->
+        <script src="vendor/daterangepicker/moment.min.js"></script>
+        <script src="vendor/daterangepicker/daterangepicker.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/slick/slick.min.js"></script>
+        <script src="js/slick-custom.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/parallax100/parallax100.js"></script>
+        <script>
+            $('.parallax100').parallax100();
+        </script>
+        <!--===============================================================================================-->
+        <script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+        <script>
+            $('.gallery-lb').each(function () { // the containers for all your galleries
+                $(this).magnificPopup({
+                    delegate: 'a', // the selector for gallery item
+                    type: 'image',
+                    gallery: {
+                        enabled: true
+                    },
+                    mainClass: 'mfp-fade'
+                });
+            });
+        </script>
+        <!--===============================================================================================-->
+        <script src="vendor/isotope/isotope.pkgd.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/sweetalert/sweetalert.min.js"></script>
+        <script>
+            $('.js-addwish-b2').on('click', function (e) {
+                e.preventDefault();
+            });
+
+            $('.js-addwish-b2').each(function () {
+                var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+                $(this).on('click', function () {
+                    swal(nameProduct, "is added to wishlist !", "success");
+
+                    $(this).addClass('js-addedwish-b2');
+                    $(this).off('click');
+                });
+            });
+
+            $('.js-addwish-detail').each(function () {
+                var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+
+                $(this).on('click', function () {
+                    swal(nameProduct, "is added to wishlist !", "success");
+
+                    $(this).addClass('js-addedwish-detail');
+                    $(this).off('click');
+                });
+            });
+
+            /*---------------------------------------------*/
+
+            $('.js-addcart-detail').each(function () {
+                var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+                $(this).on('click', function () {
+                    swal(nameProduct, "is added to cart !", "success");
+                });
+            });
+
+        </script>
+        <!--===============================================================================================-->
+        <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+        <script>
+            $('.js-pscroll').each(function () {
+                $(this).css('position', 'relative');
+                $(this).css('overflow', 'hidden');
+                var ps = new PerfectScrollbar(this, {
+                    wheelSpeed: 1,
+                    scrollingThreshold: 1000,
+                    wheelPropagation: false,
+                });
+
+                $(window).on('resize', function () {
+                    ps.update();
+                })
+            });
+        </script>
+        <!--===============================================================================================-->
+        <script src="js/main.js"></script>
+
+        <script>
+
+
+            // validation
+
+            var Name = document.getElementById('names')
+            var Email = document.getElementById('emails')
+            var Password = document.getElementById('passwords')
+            var Phone = document.getElementById('phones')
+
+          
+
+
+            function validEmail() {
+                const email = document.getElementById('email').value
+                if (email == "") {
+                    Email.innerHTML = "enter your email address"
+                    return false
+                }
+                if (!email.match(/^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/)) {
+                    Email.innerHTML = 'enter a proper email adress'
+                    return false
+                }
+                Email.innerHTML = null
+                return true
+            }
+            function validName() {
+
+                const name = document.getElementById('name').value;
+                if (name == "") {
+                    Name.innerHTML = 'Enter your Name'
+                    return false
+                }
+                if (!name.match(/^[a-zA-Z\s-, ]+$/)) {
+                    Name.innerHTML = 'Numbers and symbols are not allowed'
+                    return false
+                }
+                if (name.length < 3) {
+                    Name.innerHTML = "Name must be three characters long"
+                    return false
+                }
+                Name.innerHTML = null
+                return true
+            }
+
+            function validPhone() {
+                const phone = document.getElementById('phone').value
+                if (phone == "") {
+                    Phone.innerHTML = "enter a phone number"
+                    return false
+                }
+                if (!phone.match(/^\d{10}$/)) {
+                    Phone.innerHTML = "phone number should be  10 digits "
+                    return false
+                }
+                Phone.innerHTML = null
+                return true
+            }
+            function validPassowrd() {
+                const password = document.getElementById('password').value
+                if (password == "") {
+                    return true
+                }
+                if (password.length < 6) {
+                    Password.innerHTML = "password should be more than six characters"
+                    return false
+                }
+                Password.innerHTML = null
+                return true
+            }
+            function validation() {
+                if (!validEmail() && !validName() && !validPassowrd() && !validPhone()) {
+                    return false
+                } else if (!validEmail() || !validName() || !validPassowrd() || !validPhone()) {
+                    return false
+                } else { return true }
+            }
+        </script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+        <script>
+            $('#form-data').on('submit', async (e) => {
+                e.preventDefault()
+                const email = document.getElementById('email').value
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value
+            const newPassword = document.getElementById('password').value
+            const compare = document.getElementById('compare').value
+
+                const { value: password } = await Swal.fire({
+                    title: 'Enter your password',
+                    input: 'password',
+                    inputLabel: 'Password',
+                    inputPlaceholder: 'Enter your password',
+                    inputAttributes: {
+                        maxlength: 10,
+                        autocapitalize: 'off',
+                        autocorrect: 'off'
+                    }
+                })
+
+                if (password) {
+                    $.ajax({
+                        url:'/check-password',
+                        method: 'POST',
+                        data:{
+                            password
+                        },
+                        success:(response)=>{
+                            if(response.login){
+                                $.ajax({
+                                    url:'/profile',
+                                    method:'POST',
+                                    data:{
+                                        name,email,phone,password:newPassword,compare
+                                    },
+                                    success:(response)=>{
+                                        location.href = response.url
+                                    }
+                                })
+                            }
+                        }
+                    })
+                    
+                }
+
+            })
+
+
+        </script>
+        <style>
+            body {
+                font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            }
+        </style>
+
+
+        <%- include('./partials/footer.ejs') %>

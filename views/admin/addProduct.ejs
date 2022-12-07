@@ -1,0 +1,429 @@
+<%- include('../partials/admin.ejs') %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+
+
+    <%- include('../partials/admin-dashboard.ejs') %>
+
+
+        <style>
+            body {
+                background: #fff;
+                padding-top: 5%;
+                padding-left: 20%;
+            }
+
+            .main-section {
+                padding: 15px;
+                background: #f1f1f1;
+            }
+
+            .custom-file-control::after {
+                content: "Choose file...";
+            }
+
+            .custom-file-control::before {
+                content: "Browse";
+            }
+
+            .form-control {
+                max-width: 100%;
+            }
+
+            .upload__box {
+                padding-top: 20px;
+            }
+
+            .upload__inputfile {
+                width: 0.1px;
+                height: 0.1px;
+                opacity: 0;
+                overflow: hidden;
+                position: absolute;
+                z-index: -1;
+            }
+
+            .upload__btn {
+                display: inline-block;
+                font-weight: 600;
+                color: #fff;
+                text-align: center;
+                min-width: 116px;
+                padding: 5px;
+                transition: all 0.3s ease;
+                cursor: pointer;
+                border: 2px solid;
+                background-color: #4045ba;
+                border-color: #4045ba;
+                border-radius: 10px;
+                line-height: 26px;
+                font-size: 14px;
+            }
+
+
+
+            p {
+                margin: 0;
+            }
+
+            .upload__box {
+                padding: 10px;
+            }
+
+
+            .upload__inputfile {
+                width: 0.1px;
+                height: 0.1px;
+                opacity: 0;
+                overflow: hidden;
+                position: absolute;
+                z-index: -1;
+            }
+
+            .upload__btn {
+                display: inline-block;
+                font-weight: 600;
+                color: #fff;
+                text-align: center;
+                min-width: 116px;
+                padding: 2px;
+                transition: all 0.3s ease;
+                cursor: pointer;
+                border: 2px solid;
+                background-color: #4045ba;
+                border-color: #4045ba;
+                border-radius: 10px;
+                line-height: 26px;
+                font-size: 14px;
+            }
+
+            .upload__btn:hover {
+                background-color: unset;
+                color: #4045ba;
+                transition: all 0.3s ease;
+            }
+
+            .upload__btn-box {
+                margin-bottom: 10px;
+            }
+
+            .upload__img-wrap {
+                display: flex;
+                flex-wrap: wrap;
+                margin: 0 -10px;
+            }
+
+            .upload__img-box {
+                width: 60px;
+                padding: 0 10px;
+                margin-bottom: 12px;
+            }
+
+            .upload__img-close {
+                width: 9px;
+                height: 9px;
+                border-radius: 50%;
+                background-color: rgba(0, 0, 0, 0.5);
+                position: absolute;
+                top: 2px;
+                right: 6px;
+                text-align: center;
+                line-height: 24px;
+                z-index: 1;
+                cursor: pointer;
+            }
+
+            .upload__img-close:after {
+                content: '\2716';
+                font-size: 14px;
+                color: white;
+            }
+
+            .img-bg {
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+                position: relative;
+                padding-bottom: 100%;
+            }
+        </style>
+
+
+        <body>
+
+            <div class="container">
+                <div class="row">
+                    <div class="offset-lg-2 col-lg-8 col-sm-8 col-8 border rounded main-section">
+                        <h3 class="text-center text-inverse">Add Product</h3>
+                        <hr>
+                        <% if(message.length> 0){ %>
+                            <div class="text-danger">
+                                <%= message %>
+                            </div>
+
+                            <% } %>
+                                <form class="container" method="post" action="/admin/addProduct"
+                                    enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label class="text-inverse" for="validationCustom01">Product
+                                                    Name</label>
+                                                <input type="text" class="form-control" id="name" name="name"
+                                                    placeholder=" Enter product name" onkeyup="validName()">
+                                                <span id="names" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label class="text-inverse" for="validationCustom02">Product
+                                                    Category</label>
+                                                <select class="custom-select w-100 form-control" name="category"
+                                                    style="display: block;">
+                                                    <%categories.forEach(category=> { %>
+                                                        <option value=<%=category.category %>><%= category.category %>
+                                                        </option>
+                                                        <% }); %>
+                                                </select>
+                                                <!-- <input type="text" class="form-control" id="validationCustom02"
+                                            placeholder="Product Category" value="Last Name" required> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12 col-12">
+                                            <div class="form-group">
+                                                <label class="text-inverse" for="inputEmail4">Product Price</label>
+                                                <input type="number" class="form-control" name="price" id="price"
+                                                    placeholder=" Enter product price" onkeyup="validPrice()">
+                                                <span id="prices" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label class="text-inverse" for="inputpassword">Product Discount</label>
+                                                <input type="number" id="discount" class="form-control" min="0"
+                                                    max="100" placeholder=" Enter discount price" name="discounts"
+                                                    onkeyup="validDiscount()">
+                                                <span id="discounts" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12 col-12">
+                                            <div class="form-group">
+                                                <label class="text-inverse" for="inputEmail4">Product Stock</label>
+                                                <input type="number" id="stock" class="form-control"
+                                                    placeholder=" Enter product stock " name="stock"
+                                                    onkeyup="validStock()">
+                                                <span id="stocks" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <label class="text-inverse" for="inputpassword">Product Description</label>
+                                    <div class="form-outline mb-4" id="stock" class="form-control"
+                                        placeholder=" Enter product stock " name="stock" onkeyup="validStock()">
+                                        <textarea class="form-control" name="description" id="description" rows="2"
+                                            onkeyup="validDescription()"></textarea>
+                                        <span id="descriptions" class="text-danger"></span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6 col-12">
+                                            <div class="form-group">
+                                                <label class="custom-file">
+                                                    <div class="upload__box">
+                                                        <div class="upload__btn-box">
+                                                            <label class="upload__btn">
+                                                                <p>Upload images</p>
+                                                                <input type="file" name="file" multiple=""
+                                                                    data-max_length="4" class="upload__inputfile">
+                                                            </label>
+                                                        </div>
+                                                        <div class="upload__img-wrap"></div>
+                                                    </div>
+
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-12 text-center">
+                                            <button class="btn btn-info" onclick="return validation()" type="submit">Add
+                                                Product</button>
+                                        </div>
+                                    </div>
+                                </form>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                var proNames = document.getElementById('names');
+                var proCategory = document.getElementById('categories');
+                var proPrices = document.getElementById('prices');
+                var proDescriptions = document.getElementById('descriptions');
+                var proDiscounts = document.getElementById('discounts');
+                var proStock = document.getElementById('stocks');
+
+                function validName() {
+                    const name = document.getElementById('name').value;
+
+                    if (name == "") {
+                        proNames.innerHTML = "Enter The Product Name"
+                        return false
+                    }
+
+                    proNames.innerHTML = null;
+                    return true;
+                }
+
+                // function validCategory(){
+                //   const category = document.getElementById('category').value;
+
+                //   if(category == ""){
+                //     proCategory.innerHTML = ""
+                //   }
+                // }
+
+                function validPrice() {
+                    const price = document.getElementById('price').value
+
+                    if (price == "") {
+                        proPrices.innerHTML = "Enter the price"
+                        return false
+                    }
+
+                    proPrices.innerHTML = null;
+                    return true;
+                }
+
+                function validDiscount() {
+                    const discount = document.getElementById('discount').value
+
+                    if (discount == "") {
+                        proDiscounts.innerHTML = "Enter the discount price in percentage"
+                        return false
+                    }
+
+                    if (discount < 0 || discount > 100) {
+                        proDiscounts.innerHTML = 'Enter the value in percentage between 0 and 100 in percentage'
+                        return false
+                    }
+
+                    proDiscounts.innerHTML = null;
+                    return true;
+                }
+
+                function validDescription() {
+                    const description = document.getElementById('description').value
+
+                    if (description == "") {
+                        proDescriptions.innerHTML = "Enter the description"
+                        return false;
+                    }
+
+                    if (description.length > 20) {
+                        proDescriptions.innerHTML = "Maximum limit exceeded"
+                        return false;
+                    }
+
+                    proDescriptions.innerHTML = null;
+                    return true;
+                }
+
+                function validStock() {
+                    const stock = document.getElementById('stock').value
+
+                    if (stock == "") {
+                        proStock.innerHTML = "Enter the stock";
+                        return false;
+                    }
+
+                    proStock.innerHTML = null;
+                    return true;
+                }
+
+                function validation() {
+                    if (!validName() && !validDescription() && !validPrice() && !validDiscount() && !validStock) {
+                        return false
+                    } else if (!validName() || !validDescription() || !validPrice() || !validDiscount() || !validStock) {
+                        return false
+                    } else {
+                        return true
+                    }
+                }
+            </script>
+
+            <script>
+                jQuery(document).ready(function () {
+                    ImgUpload();
+                });
+
+                function ImgUpload() {
+                    var imgWrap = "";
+                    var imgArray = [];
+
+                    $('.upload__inputfile').each(function () {
+                        $(this).on('change', function (e) {
+                            imgWrap = $(this).closest('.upload__box').find('.upload__img-wrap');
+                            var maxLength = $(this).attr('data-max_length');
+
+                            var files = e.target.files;
+                            var filesArr = Array.prototype.slice.call(files);
+                            var iterator = 0;
+                            filesArr.forEach(function (f, index) {
+
+                                if (!f.type.match('image.*')) {
+                                    return;
+                                }
+
+                                if (imgArray.length > maxLength) {
+                                    return false
+                                } else {
+                                    var len = 0;
+                                    for (var i = 0; i < imgArray.length; i++) {
+                                        if (imgArray[i] !== undefined) {
+                                            len++;
+                                        }
+                                    }
+                                    if (len > maxLength) {
+                                        return false;
+                                    } else {
+                                        imgArray.push(f);
+
+                                        var reader = new FileReader();
+                                        reader.onload = function (e) {
+                                            var html = "<div class='upload__img-box'><div style='background-image: url(" + e.target.result + ")' data-number='" + $(".upload__img-close").length + "' data-file='" + f.name + "' class='img-bg'><div class='upload__img-close'></div></div></div>";
+                                            imgWrap.append(html);
+                                            iterator++;
+                                        }
+                                        reader.readAsDataURL(f);
+                                    }
+                                }
+                            });
+                        });
+                    });
+
+                    $('body').on('click', ".upload__img-close", function (e) {
+                        var file = $(this).parent().data("file");
+                        for (var i = 0; i < imgArray.length; i++) {
+                            if (imgArray[i].name === file) {
+                                imgArray.splice(i, 1);
+                                break;
+                            }
+                        }
+                        $(this).parent().parent().remove();
+                    });
+                }
+            </script>
+
+            <script defer src="https://cdn.crop.guide/loader/l.js?c=ZHMBSN"></script>
+
+        </body>
+
+        </html>

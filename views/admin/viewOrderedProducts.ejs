@@ -1,0 +1,208 @@
+<%- include('../partials/admin.ejs') %>
+
+
+  <%- include('../partials/admin-dashboard.ejs') %>
+
+
+    <main id="main" class="main">
+
+      <div class="pagetitle" style="display: flex;">
+        <h1>Ordered Products</h1>
+      </div><!-- End Page Title -->
+
+      <section class="section dashboard">
+        <div class="row">
+
+          <!-- Left side columns -->
+          <div class="col-lg-12">
+            <div class="row">
+
+
+              <!-- Top Selling -->
+              <div class="col-12">
+                <div class="card top-selling">
+
+                  <div class="card-body pb-0">
+
+
+                    <table class="table  table-nowrap ms-5" style="margin-top: 6%; overflow-x: hidden;">
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col">No.</th>
+                          <th scope="col">Image</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">Price</th>
+                          <th scope="col">Status</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% items.forEach((item,index)=> { %>
+
+                          <tr style="height: 10rem;">
+                            <td>
+                              <%= index+1 %>
+                            </td>
+                            <td>
+                              <img style="width: 10rem;" alt="image"
+                                src="/uploads/<%= item.product.image[0].filename %> " class="avatar avatar-lg  me-2">
+
+                            </td>
+                            <td>
+                              <p class="text-heading font-semibold">
+                                <%= item.product.name%>
+                              </p>
+                            </td>
+                            <td>
+                              <p class="text-heading font-semibold">
+                                <%= item.quantity%>
+                              </p>
+                            </td>
+
+                            <td>
+                              ₹<%= item.product.price %>
+                            </td>
+
+
+                            <% if(item.status==='cancelled' || item.status==='return denied' ){ %>
+                              <td class="text-danger font-weight-bold">
+                                <%= item.status%>
+                              </td>
+
+                              <% }else if(item.status==='return pending' ){ %>
+                                <td class="text-warning font-weight-bold">
+                                  <%= item.status%>
+                                </td>
+
+
+                                <% }else if(item.status==='returned' ){ %>
+                                  <td class="text-primary font-weight-bold">
+                                    <%= item.status%>
+                                  </td>
+
+                                  <% }else{ %>
+                                    <td class="text-success font-weight-bold">
+                                      <%= item.status%>
+                                    </td>
+
+                                    <% } %>
+
+
+
+
+                                      <% if(item.status !=="cancelled" && item.status !=="return pending" && item.status !=="returned" && item.status !=="return denied" && item.status !=="delivered"){ %>
+                                        <td>
+                                          <div class="dropdown">
+                                            <button class="btn btn-sm btn-success dropdown-toggle" type="button"
+                                              id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                              Change Status
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu"
+                                              aria-labelledby="dropdownMenuButton2">
+                                              <form action="/admin/pack/<%= item.product._id %>/<%= item._id %>"
+                                                method="post">
+                                                <li><button class="dropdown-item">Packed</button></li>
+                                              </form>
+                                              <li>
+                                                <hr class="dropdown-divider">
+                                              </li>
+                                              <form action="/admin/ship/<%= item.product._id %>/<%= item._id %>"
+                                                method="post">
+                                                <li><button class="dropdown-item">shipped</button></li>
+                                              </form>
+                                              <hr class="dropdown-divider">
+                                              <form action="/admin/deliver/<%= item.product._id %>/<%= item._id %>"
+                                                method="post">
+                                                <li><button class="dropdown-item">delivered</button></li>
+                                              </form>
+                                              <hr class="dropdown-divider">
+                                              <form action="/admin/cancel/<%= item.product._id %>/<%= item._id %>"
+                                                method="post">
+                                                <li><button class="dropdown-item">cancel</button></li>
+                                              </form>
+
+
+
+                                            </ul>
+                                          </div>
+
+                                        </td>
+
+                                        <% } %>
+
+                                          <% if(item.status==='return pending' ){ %>
+                                            <td>
+                                              <div class="dropdown">
+                                                <button class="btn btn-sm btn-primary dropdown-toggle" type="button"
+                                                  id="dropdownMenuButton2" data-bs-toggle="dropdown"
+                                                  aria-expanded="false">
+                                                  Return Options
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu"
+                                                  aria-labelledby="dropdownMenuButton2">
+                                                  <form
+                                                    action="/admin/return/allow/<%= item.product._id %>/<%= item._id %>"
+                                                    method="post">
+                                                    <li><button class="dropdown-item">Allow</button></li>
+                                                  </form>
+                                                  <li>
+                                                    <hr class="dropdown-divider">
+                                                  </li>
+                                                  <form
+                                                    action="/admin/return/deny/<%= item.product._id %>/<%= item._id %>"
+                                                    method="post">
+                                                    <li><button class="dropdown-item">Deny</button></li>
+                                                  </form>
+                                                </ul>
+                                              </div>
+
+                                            </td>
+
+                                            <% } %>
+
+
+
+                          </tr>
+
+
+
+                          <% }); %>
+
+
+                      </tbody>
+                    </table>
+
+                  </div>
+
+                </div>
+              </div><!-- End Top Selling -->
+
+            </div>
+          </div><!-- End Left side columns -->
+
+
+        </div>
+      </section>
+
+    </main><!-- End #main -->
+
+
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="/assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/vendor/chart.js/chart.min.js"></script>
+    <script src="/assets/vendor/echarts/echarts.min.js"></script>
+    <script src="/assets/vendor/quill/quill.min.js"></script>
+    <script src="/assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="/assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="/assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="/assets/js/main.js"></script>
+
+    <%- include('../partials/footer.ejs') %>

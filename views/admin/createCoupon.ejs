@@ -1,0 +1,226 @@
+<%- include('../partials/admin.ejs') %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <%- include('../partials/admin-dashboard.ejs') %>
+
+
+        <style>
+            .bg {
+                background-color: #fff;
+                width: 100%;
+                height: 100vh;
+            }
+
+            h1 {
+                margin-top: 10vh;
+                font-family: oswald;
+                color: #172A3A;
+            }
+
+            .form-group {
+                font-family: Oswald;
+                margin-top: 0px;
+            }
+
+            #mlot {
+                margin-bottom: 50px;
+            }
+
+            .form-container {
+                border: 1px solid #000;
+                padding: 50px 60px;
+                margin-top: 2vh;
+                -webkit-box-shadow: -1px 4px 45px -7px rgba(0, 0, 0, 0.75);
+                -moz-box-shadow: -1px 4px 45px -7px rgba(0, 0, 0, 0.75);
+                box-shadow: -1px 4px 45px -7px rgba(0, 0, 0, 0.75);
+            }
+
+            ;
+        </style>
+        <div class="container-fluid  mt-2" style="margin-left:5%;">
+
+
+            <h1 class="text-center"> CREATE COUPON </h1>
+
+            <div class="row">
+                <div class="col-md-4 col-sm-4 col-xs-12"></div>
+
+                <div class="col-md-4 col-sm-4 col-xs-12">
+
+                    <form class="form-container" method="post" action="">
+                        <!-- <h2 class="text-center"> PRODUCT DETAILS </h2>  -->
+                        <div class="form-group mt-3">
+                            <label for="mid">COUPON NAME</label>
+                            <input type="text" class="form-control" id="name" name="couponname"
+                                placeholder=" Enter coupon name" onkeyup="validName()">
+                            <span id="names" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label for="mlot">DISCOUNT PRICE</label>
+                            <input type="number" class="form-control" name="couponprice" id="discount"
+                                placeholder=" Enter discount price" onkeyup="validDiscount()">
+                                <span id="discounts" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label>COUPON CODE</label>
+                            <input type="text" class="form-control"  name="couponcode" id="couponcode"
+                                placeholder=" Enter coupon code" onkeyup="validCoupon()">
+                                <span id="coupons" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label>ACTIVATION DATE</label>
+                            <input type="date" class="form-control" id="txtDate" name="activation"  required>
+                            <span id="avndates" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label>EXPIRATION DATE</label>
+                            <input type="date" class="form-control" id="expDate" name="expirationdate" required>
+                            <span id="expndates" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label>MINIMUM ORDER PRICE</label>
+                            <input type="number" class="form-control" id="minOrder" name="orderprice" onkeyup="validOrderPrice()">
+                            <span id="orderPrices" class="text-danger"></span>
+                        </div>
+
+
+
+                        <button type="submit" class="btn btn-primary btn-block mt-3" onclick="return validation()">CREATE COUPON</button>
+                    </form>
+
+
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-12"></div>
+
+        </div>
+
+        <script>
+            $(function () {
+                var dtToday = new Date();
+
+                var month = dtToday.getMonth() + 1;
+                var day = dtToday.getDate();
+                var year = dtToday.getFullYear();
+                if (month < 10)
+                    month = '0' + month.toString();
+                if (day < 10)
+                    day = '0' + day.toString();
+
+                var maxDate = year + '-' + month + '-' + day;
+
+                $('#txtDate').attr('min', maxDate);
+            });
+        </script>
+
+        <script>
+            const today = new Date()
+            let tomorrow =  new Date()
+            tomorrow.setDate(today.getDate() + 1);
+            console.log(tomorrow);
+
+        
+            $(function () {
+                var dtToday = tomorrow;
+
+                var month = dtToday.getMonth() + 1;
+                var day = dtToday.getDate();
+                var year = dtToday.getFullYear();
+                if (month < 10)
+                    month = '0' + month.toString();
+                if (day < 10)
+                    day = '0' + day.toString();
+
+                var maxDate = year + '-' + month + '-' + day;
+
+                $('#expDate').attr('min', maxDate);
+            });
+        </script>
+
+        <script>
+            var couponNames = document.getElementById('names');
+            var couponDiscounts = document.getElementById('discounts')
+            var couponCodes = document.getElementById('coupons')
+            var activationDates = document.getElementById('avndates')
+            var expirationDates = document.getElementById('expndates')
+            var minOrderPrices = document.getElementById('orderPrices')
+
+            function validName(){
+                const name = document.getElementById('name').value;
+
+                if(name === ""){
+                    couponNames.innerHTML = "Enter The coupon Name"
+                    return false
+                }
+
+                couponNames.innerHTML = null;
+                return true
+            }
+
+            function validDiscount(){
+                const discount = document.getElementById('discount').value;
+
+                if(discount === ""){
+                    couponDiscounts.innerHTML = "Enter the coupon discount"
+                    return false
+                }
+
+                if(discount >20000){
+                    couponDiscounts.innerHTML = "This much discount is not allowed"
+                    return false
+                }
+
+                couponDiscounts.innerHTML = null;
+                return true;
+            }
+
+            function validCoupon(){
+                const couponCode = document.getElementById('couponcode').value
+
+                if(couponCode === ""){
+                    couponCodes.innerHTML = "Enter the coupon code"
+                    return false
+                }
+                if(couponCode.length > 8){
+                    couponCodes.innerHTML = "Enter the code between 8 characters"
+                    return false
+                }
+                couponCodes.innerHTML = null;
+                return true;
+            }
+
+            function validOrderPrice(){
+                const orderPrice = document.getElementById('minOrder').value;
+
+                if(orderPrice === ""){
+                    minOrderPrices.innerHTML = "Enter the minimum order price"
+                    return false
+                }
+
+                if(orderPrice < 200){
+                    minOrderPrices.innerHTML = "you can't give offer below rupees 200"
+                    return false
+                }
+
+                minOrderPrices.innerHTML = null;
+                return true;
+            }
+
+            function validation() {
+                    if (!validName() && !validDiscount() && !validCoupon() && !validOrderPrice()) {
+                        return false
+                    } else if (!validName() || !validDiscount() || !validCoupon() || !validOrderPrice()) {
+                        return false
+                    } else {
+                        return true
+                    }
+                }
+        </script>
+
+
+       
+
+        <%- include('../partials/footer.ejs') %>

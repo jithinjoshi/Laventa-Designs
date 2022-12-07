@@ -1,0 +1,189 @@
+<%- include('./partials/header.ejs') %>
+    <link rel="stylesheet" href="/singleproduct/assets/css/bootstrap.min.css">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="/singleproduct/assets/css/style.css">
+    <!-- Header -->
+    <%- include('./partials/user-header.ejs') %>
+
+
+        <main class="main">
+            <div class="page-header text-center"
+                style="background-image: url('/singleproduct/assets/images/page-header-bg.jpg')">
+            </div><!-- End .page-header -->
+            <div class="page-header text-center"
+                style="background-image: url('/singleproduct/assets/images/page-header-bg.jpg')">
+                <div class="container">
+                    <h1 class="page-title">EDIT PROFILE<span></span></h1>
+                </div><!-- End .container -->
+            </div><!-- End .page-header -->
+
+
+            <div class="page-content">
+                <div class="checkout">
+
+                    <div class="container pt-5">
+                        <form action="/edit-address/<%= address._id %>" method="post" id="order-sub">
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <!-- End .checkout-title -->
+
+
+                                    <label>Full Name *</label>
+                                    <input type="text" class="form-control" name="fullname" id="fullname"
+                                        value="<%= address.fullname %>" required>
+
+                                    <!-- <label>Country *</label>
+                                    <input type="text" class="form-control" name="country" id="coun" required> -->
+
+                                    <label>Street address *</label>
+                                    <input type="text" class="form-control" name="address" id="address"
+                                        value="<%= address.address %> " required>
+
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label>Town / City *</label>
+                                            <input type="text" class="form-control" name="city" id="city"
+                                                value="<%= address.city %>" required>
+                                        </div><!-- End .col-sm-6 -->
+
+                                        <div class="col-sm-6">
+                                            <label>State*</label>
+                                            <input type="text" class="form-control" name="state" id="state"
+                                                value="<%= address.state %>" required>
+                                        </div><!-- End .col-sm-6 -->
+                                    </div><!-- End .row -->
+
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label>Postcode / ZIP *</label>
+                                            <input type="text" class="form-control" name="zip" id="pin"
+                                                value="<%= address.pin %>" required>
+                                        </div><!-- End .col-sm-6 -->
+
+                                        <div class="col-sm-6">
+                                            <label>Phone</label>
+                                            <input type="tel" class="form-control" name="tel" id="tel" required
+                                                value="<%= address.tel %>">
+                                            <input type="text" name="userid" hidden value="<%=user._id%>">
+                                        </div><!-- End .col-sm-6 -->
+                                    </div><!-- End .row -->
+
+                                    <button class="btn btn-primary btn-lg btn-block mt-2">Save changes</button>
+
+                                </div><!-- End .col-lg-9 -->
+                            </div><!-- End .row -->
+                        </form>
+                    </div><!-- End .container -->
+                </div><!-- End .checkout -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+
+
+
+
+
+
+        <!--===============================================================================================-->
+        <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/animsition/js/animsition.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/bootstrap/js/popper.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/select2/select2.min.js"></script>
+        <script>
+            $(".js-select2").each(function () {
+                $(this).select2({
+                    minimumResultsForSearch: 20,
+                    dropdownParent: $(this).next('.dropDownSelect2')
+                });
+            })
+        </script>
+        <!--===============================================================================================-->
+        <script src="vendor/daterangepicker/moment.min.js"></script>
+        <script src="vendor/daterangepicker/daterangepicker.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/slick/slick.min.js"></script>
+        <script src="js/slick-custom.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/parallax100/parallax100.js"></script>
+        <script>
+            $('.parallax100').parallax100();
+        </script>
+        <!--===============================================================================================-->
+        <script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+        <script>
+            $('.gallery-lb').each(function () { // the containers for all your galleries
+                $(this).magnificPopup({
+                    delegate: 'a', // the selector for gallery item
+                    type: 'image',
+                    gallery: {
+                        enabled: true
+                    },
+                    mainClass: 'mfp-fade'
+                });
+            });
+        </script>
+        <!--===============================================================================================-->
+        <script src="vendor/isotope/isotope.pkgd.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/sweetalert/sweetalert.min.js"></script>
+        <script>
+            $('.js-addwish-b2').on('click', function (e) {
+                e.preventDefault();
+            });
+
+            $('.js-addwish-b2').each(function () {
+                var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+                $(this).on('click', function () {
+                    swal(nameProduct, "is added to wishlist !", "success");
+
+                    $(this).addClass('js-addedwish-b2');
+                    $(this).off('click');
+                });
+            });
+
+            $('.js-addwish-detail').each(function () {
+                var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+
+                $(this).on('click', function () {
+                    swal(nameProduct, "is added to wishlist !", "success");
+
+                    $(this).addClass('js-addedwish-detail');
+                    $(this).off('click');
+                });
+            });
+
+            /*---------------------------------------------*/
+
+            $('.js-addcart-detail').each(function () {
+                var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+                $(this).on('click', function () {
+                    swal(nameProduct, "is added to cart !", "success");
+                });
+            });
+
+        </script>
+        <!--===============================================================================================-->
+        <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+        <script>
+            $('.js-pscroll').each(function () {
+                $(this).css('position', 'relative');
+                $(this).css('overflow', 'hidden');
+                var ps = new PerfectScrollbar(this, {
+                    wheelSpeed: 1,
+                    scrollingThreshold: 1000,
+                    wheelPropagation: false,
+                });
+
+                $(window).on('resize', function () {
+                    ps.update();
+                })
+            });
+        </script>
+        <!--===============================================================================================-->
+        <script src="js/main.js"></script>
+
+
+        <%- include('./partials/footer.ejs') %>

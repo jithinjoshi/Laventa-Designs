@@ -1,0 +1,807 @@
+<%- include('./partials/header.ejs') %>
+    <style>
+        /* vars */
+        :root {
+            --back: #eeeeee;
+            --blue: #0082d2;
+            --green: #33DDAA;
+            --gray: #777777;
+            --size: 200px;
+        }
+
+        body,
+        html {
+            background: var(--back);
+            padding: 0;
+            margin: 0;
+            font-family: sans-serif;
+            color: var(--gray);
+        }
+
+        .tracking-wrapper {
+            margin: 30px;
+            padding: 0;
+        }
+
+        .tracking * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .tracking {
+            width: var(--size);
+            max-width: 100%;
+            position: relative;
+        }
+
+        .tracking .empty-bar {
+            background: #ddd;
+            position: absolute;
+            width: 90%;
+            height: 20%;
+            top: 40%;
+            margin-left: 5%;
+        }
+
+        .tracking .color-bar {
+            background: var(--blue);
+            position: absolute;
+            height: 20%;
+            top: 40%;
+            margin-left: 5%;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+            -ms-transition: all 0.5s;
+            -o-transition: all 0.5s;
+        }
+
+        .tracking ul {
+            display: flex;
+            justify-content: space-between;
+            list-style: none;
+        }
+
+        .tracking ul>li {
+            background: #ddd;
+            text-align: center;
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            -ms-border-radius: 50%;
+            -o-border-radius: 50%;
+            z-index: 1;
+            background-size: 70%;
+            background-repeat: no-repeat;
+            background-position: center center;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+            -ms-transition: all 0.5s;
+            -o-transition: all 0.5s;
+            display: inline-block;
+            position: relative;
+            width: 10%;
+        }
+
+        .tracking ul>li .el {
+            position: relative;
+            margin-top: 100%;
+        }
+
+        .tracking ul>li .el i {
+            position: absolute;
+            bottom: 100%;
+            left: 8%;
+            margin-bottom: 12%;
+            color: #fff;
+            font-size: 100%;
+            display: none;
+        }
+
+        .tracking ul>li .txt {
+            color: #999;
+            position: absolute;
+            top: 120%;
+            left: -75%;
+            text-align: center;
+            width: 250%;
+            font-size: .75rem;
+        }
+
+        .tracking .progress-0 .color-bar {
+            width: 00%;
+        }
+
+        .tracking .progress-1 .color-bar {
+            width: 15%;
+        }
+
+        .tracking .progress-2 .color-bar {
+            width: 30%;
+        }
+
+        .tracking .progress-3 .color-bar {
+            width: 45%;
+        }
+
+        .tracking .progress-4 .color-bar {
+            width: 60%;
+        }
+
+        .tracking .progress-5 .color-bar {
+            width: 75%;
+        }
+
+        .tracking .progress-6 .color-bar {
+            width: 90%;
+        }
+
+        .tracking .progress-7 .color-bar {
+            width: 90%;
+        }
+
+        .tracking .progress-0>ul>li.bullet-1,
+        .tracking .progress-1>ul>li.bullet-1,
+        .tracking .progress-2>ul>li.bullet-1,
+        .tracking .progress-3>ul>li.bullet-1,
+        .tracking .progress-4>ul>li.bullet-1,
+        .tracking .progress-5>ul>li.bullet-1,
+        .tracking .progress-6>ul>li.bullet-1,
+        .tracking .progress-7>ul>li.bullet-1 {
+            background-color: var(--blue);
+        }
+
+        .tracking .progress-2>ul>li.bullet-2,
+        .tracking .progress-3>ul>li.bullet-2,
+        .tracking .progress-4>ul>li.bullet-2,
+        .tracking .progress-5>ul>li.bullet-2,
+        .tracking .progress-6>ul>li.bullet-2,
+        .tracking .progress-7>ul>li.bullet-2 {
+            background-color: var(--blue);
+        }
+
+        .tracking .progress-4>ul>li.bullet-3,
+        .tracking .progress-5>ul>li.bullet-3,
+        .tracking .progress-6>ul>li.bullet-3,
+        .tracking .progress-7>ul>li.bullet-3 {
+            background-color: var(--blue);
+        }
+
+        .tracking .progress-6>ul>li.bullet-4,
+        .tracking .progress-7>ul>li.bullet-4 {
+            background-color: var(--blue);
+        }
+
+        .tracking .progress-7>ul>li.bullet-4 {
+            background-color: var(--green);
+        }
+
+        .tracking .progress-1>ul>li.bullet-1 .el i,
+        .tracking .progress-2>ul>li.bullet-1 .el i,
+        .tracking .progress-3>ul>li.bullet-1 .el i,
+        .tracking .progress-4>ul>li.bullet-1 .el i,
+        .tracking .progress-5>ul>li.bullet-1 .el i,
+        .tracking .progress-6>ul>li.bullet-1 .el i,
+        .tracking .progress-7>ul>li.bullet-1 .el i {
+            display: block;
+        }
+
+        .tracking .progress-3>ul>li.bullet-2 .el i,
+        .tracking .progress-4>ul>li.bullet-2 .el i,
+        .tracking .progress-5>ul>li.bullet-2 .el i,
+        .tracking .progress-6>ul>li.bullet-2 .el i,
+        .tracking .progress-7>ul>li.bullet-2 .el i {
+            display: block;
+        }
+
+        .tracking .progress-5>ul>li.bullet-3 .el i,
+        .tracking .progress-6>ul>li.bullet-3 .el i,
+        .tracking .progress-7>ul>li.bullet-3 .el i {
+            display: block;
+        }
+
+        .tracking .progress-7>ul>li.bullet-4 .el i {
+            display: block;
+        }
+
+        .tracking .progress-1>ul>li.bullet-1 .txt,
+        .tracking .progress-2>ul>li.bullet-1 .txt,
+        .tracking .progress-3>ul>li.bullet-1 .txt,
+        .tracking .progress-4>ul>li.bullet-1 .txt,
+        .tracking .progress-5>ul>li.bullet-1 .txt,
+        .tracking .progress-6>ul>li.bullet-1 .txt,
+        .tracking .progress-7>ul>li.bullet-1 .txt {
+            color: var(--blue);
+        }
+
+        .tracking .progress-3>ul>li.bullet-2 .txt,
+        .tracking .progress-4>ul>li.bullet-2 .txt,
+        .tracking .progress-5>ul>li.bullet-2 .txt,
+        .tracking .progress-6>ul>li.bullet-2 .txt,
+        .tracking .progress-7>ul>li.bullet-2 .txt {
+            color: var(--blue);
+        }
+
+        .tracking .progress-5>ul>li.bullet-3 .txt,
+        .tracking .progress-6>ul>li.bullet-3 .txt,
+        .tracking .progress-7>ul>li.bullet-3 .txt {
+            color: var(--blue);
+        }
+
+        .tracking .progress-7>ul>li.bullet-4 .txt {
+            color: var(--blue);
+        }
+
+        /* demo */
+        .controls {
+            margin: 90px 30px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        .controls>div {
+            display: flex;
+            justify-content: flex-start;
+            align-items: space-between;
+            margin: 0;
+            padding: 0;
+        }
+
+        .controls p,
+        .controls button {
+            border: 0;
+            line-height: 20px;
+            padding: 15px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .controls button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 6px;
+            background: var(--blue);
+            color: #fff;
+            border-radius: 50px;
+            transition: all .3s;
+        }
+
+        .controls button:nth-child(1) {
+            margin-left: 0;
+        }
+
+        .controls button i {
+            font-size: 1rem;
+            margin: 0 5px;
+        }
+
+        .controls button#prev {
+            padding-right: 30px;
+        }
+
+        .controls button#next {
+            padding-left: 30px;
+        }
+
+        .controls button:hover,
+        .controls button:focus {
+            outline: none;
+            background-color: var(--green);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/singleproduct/assets/css/bootstrap.min.css">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="/singleproduct/assets/css/style.css">
+    <!-- Header -->
+    <%- include('./partials/user-header.ejs') %>
+        <main class="main">
+            <div class="page-header text-center"
+                style="background-image: url('/singleproduct/assets/images/page-header-bg.jpg')">
+                <div class="container mt-5">
+                    <h1 class="page-title">Ordered Products<span>Shop</span></h1>
+                </div><!-- End .container -->
+            </div><!-- End .page-header -->
+
+
+
+            <div class="page-content">
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-lg-9">
+
+                            <% products.forEach(product=> { %>
+                                <div class="products mb-3" onload="alert('hello')">
+                                    <div class="product product-list mt-3">
+                                        <div class="row">
+                                            <div class="col-6 col-lg-3">
+                                                <figure class="product-media">
+                                                    <a href="product.html">
+                                                        <img src="/uploads/<%= product.product.image[0].filename %>"
+                                                            alt="Product image" class="product-image">
+                                                    </a>
+                                                </figure><!-- End .product-media -->
+                                            </div><!-- End .col-sm-6 col-lg-3 -->
+
+                                            <div class="col-6 col-lg-3 order-lg-last">
+
+                                                <div class="product-list-action">
+                                                    <div class="product-price">
+                                                        ₹
+                                                        <%= product.product.price %>
+                                                    </div><!-- End .product-price -->
+
+                                                    <div class="product-content">
+                                                        <span>Status:</span>
+
+                                                        <% if(product.status==='placed' || product.status==='packed' ||
+                                                            product.status==='delivered' || product.status==='shipped'
+                                                            ){ %>
+                                                            <p class="text-success font-weight-bold"
+                                                                style="display: inline;">
+                                                                <%= product.status %>
+                                                            </p>
+                                                            <% }else if(product.status==='cancelled' ||
+                                                                product.status==='return denied' ){ %>
+                                                                <p class="text-danger font-weight-bold"
+                                                                    style="display: inline;">
+                                                                    <%= product.status %>
+                                                                </p>
+
+                                                                <% }else if(product.status==='return pending' ){ %>
+                                                                    <p class="text-primary font-weight-bold"
+                                                                        style="display: inline;">
+                                                                        <%= product.status %>
+                                                                    </p>
+
+                                                                    <% }else if(product.status==='returned' ){%>
+
+                                                                        <p class="text-info font-weight-bold"
+                                                                            style="display: inline;">
+                                                                            <%= product.status %>
+                                                                        </p>
+
+                                                                        <% } %>
+
+                                                    </div><!-- End .product-content -->
+
+                                                    <% if(product.status==='placed' || product.status==='packed' ||
+                                                        product.status==='shipped' ){ %>
+                                                        <form
+                                                            action="/cancel-product-order/<%= product.item%>/<%= product._id %>"
+                                                            method="post">
+                                                            <button class="btn btn-danger"><span>Cancel
+                                                                    Order</span></button>
+                                                        </form>
+                                                        <% }else if(product.status==='delivered' ){ %>
+                                                            <button class="btn btn-success"
+                                                                onclick="returnProduct('<%= product.item%>','<%= product._id %>')"><span>Return
+                                                                    Product</span></button>
+
+                                                            <% }else if(product.status==='returned' ){ %>
+                                                                <button type="button" class="btn btn-outline-info"><i
+                                                                        class="fa-solid fa-wallet"></i> check
+                                                                    Wallet</button>
+                                                                <% } %>
+
+
+                                                </div><!-- End .product-list-action -->
+                                            </div><!-- End .col-sm-6 col-lg-3 -->
+
+
+
+                                            <div class="col-lg-6">
+                                                <div class="product-body product-action-inner">
+                                                    <div class="product-cat">
+                                                        <a href="#"></a>
+                                                    </div><!-- End .product-cat -->
+                                                    <h3 class="product-title"><a href="">
+                                                            <%= product.product.name %>
+                                                        </a></h3><!-- End .product-title -->
+
+                                                    <div class="product-content">
+                                                        <p>
+                                                            <%= product.product.description %>
+                                                        </p>
+                                                    </div><!-- End .product-content -->
+
+                                                    <div class="product-cat">
+                                                        <p><span>Quantity:</span>
+                                                            <%= product.quantity %>
+                                                        </p>
+                                                    </div><!-- End .product-content -->
+
+                                                    <div class="product-nav product-nav-thumbs">
+                                                        <a href="#" class="active">
+                                                            <img src="/uploads/<%= product.product.image[1].filename %>"
+                                                                alt="product desc">
+                                                        </a>
+                                                        <a href="#">
+                                                            <img src="/uploads/<%= product.product.image[2].filename %>"
+                                                                alt="product desc">
+                                                        </a>
+
+                                                        <a href="#">
+                                                            <img src="/uploads/<%= product.product.image[3].filename %>"
+                                                                alt="product desc">
+                                                        </a>
+                                                    </div><!-- End .product-nav -->
+                                                </div><!-- End .product-body -->
+                                            </div><!-- End .col-lg-6 -->
+
+                                        </div><!-- End .row -->
+
+                                        <div class="tracking-wrapper">
+                                            <div class="tracking">
+                                                <div id="progress" class="progress-0">
+                                                    <div class="empty-bar"></div>
+                                                    <div class="color-bar"></div>
+                                                    <ul>
+                                                        <li class="bullet-1">
+                                                            <div class="el"><i class='bx bx-check'></i></div>
+                                                            <div class="txt">Order Placed</div>
+                                                        </li>
+                                                        <li class="bullet-2">
+                                                            <div class="el"><i class='bx bx-check'></i></div>
+                                                            <div class="txt">Order Packed</div>
+                                                        </li>
+                                                        <li class="bullet-3">
+                                                            <div class="el"><i class='bx bx-check'></i></div>
+                                                            <div class="txt">Order Shipped</div>
+                                                        </li>
+                                                        <li class="bullet-4">
+                                                            <div class="el"><i class='bx bx-check'></i></div>
+                                                            <div class="txt">Order Delivered</div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- End .product -->
+
+
+                                </div><!-- End .products -->
+                                <% }) %>
+
+
+
+                        </div><!-- End .col-lg-9 -->
+
+                    </div><!-- End .row -->
+
+
+
+
+                </div><!-- End .container -->
+            </div><!-- End .page-content -->
+
+        </main><!-- End .main -->
+
+        <footer class="bg3 p-t-75 p-b-32">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-lg-3 p-b-50">
+                        <h4 class="stext-301 cl0 p-b-30">
+                            Categories
+                        </h4>
+
+                        <ul>
+                            <li class="p-b-10">
+                                <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                    Women
+                                </a>
+                            </li>
+
+                            <li class="p-b-10">
+                                <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                    Men
+                                </a>
+                            </li>
+
+                            <li class="p-b-10">
+                                <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                    Shoes
+                                </a>
+                            </li>
+
+                            <li class="p-b-10">
+                                <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                    Watches
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-3 p-b-50">
+                        <h4 class="stext-301 cl0 p-b-30">
+                            Help
+                        </h4>
+
+                        <ul>
+                            <li class="p-b-10">
+                                <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                    Track Order
+                                </a>
+                            </li>
+
+                            <li class="p-b-10">
+                                <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                    Returns
+                                </a>
+                            </li>
+
+                            <li class="p-b-10">
+                                <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                    Shipping
+                                </a>
+                            </li>
+
+                            <li class="p-b-10">
+                                <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                                    FAQs
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-3 p-b-50">
+                        <h4 class="stext-301 cl0 p-b-30">
+                            GET IN TOUCH
+                        </h4>
+
+                        <p class="stext-107 cl7 size-201">
+                            Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call
+                            us on (+1) 96 716 6879
+                        </p>
+
+                        <div class="p-t-27">
+                            <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+
+                            <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+
+                            <a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+                                <i class="fa fa-pinterest-p"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-3 p-b-50">
+                        <h4 class="stext-301 cl0 p-b-30">
+                            Newsletter
+                        </h4>
+
+                        <form>
+                            <div class="wrap-input1 w-full p-b-4">
+                                <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email"
+                                    placeholder="email@example.com">
+                                <div class="focus-input1 trans-04"></div>
+                            </div>
+
+                            <div class="p-t-18">
+                                <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
+                                    Subscribe
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="p-t-40">
+                    <div class="flex-c-m flex-w p-b-18">
+                        <a href="#" class="m-all-1">
+                            <img src="/images/icons/icon-pay-01.png" alt="ICON-PAY">
+                        </a>
+
+                        <a href="#" class="m-all-1">
+                            <img src="/images/icons/icon-pay-02.png" alt="ICON-PAY">
+                        </a>
+
+                        <a href="#" class="m-all-1">
+                            <img src="/images/icons/icon-pay-03.png" alt="ICON-PAY">
+                        </a>
+
+                        <a href="#" class="m-all-1">
+                            <img src="/images/icons/icon-pay-04.png" alt="ICON-PAY">
+                        </a>
+
+                        <a href="#" class="m-all-1">
+                            <img src="/images/icons/icon-pay-05.png" alt="ICON-PAY">
+                        </a>
+                    </div>
+
+                    <p class="stext-107 cl6 txt-center">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;
+                        <script>document.write(new Date().getFullYear());</script> All rights reserved | Made with <i
+                            class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
+                            target="_blank">Colorlib</a> &amp; distributed by <a href="https://themewagon.com"
+                            target="_blank">ThemeWagon</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+        <!--===============================================================================================-->
+        <script src="/vendor/jquery/jquery-3.2.1.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="/vendor/animsition/js/animsition.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="/vendor/bootstrap/js/popper.js"></script>
+        <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="/vendor/select2/select2.min.js"></script>
+        <script>
+            $(".js-select2").each(function () {
+                $(this).select2({
+                    minimumResultsForSearch: 20,
+                    dropdownParent: $(this).next('.dropDownSelect2')
+                });
+            })
+        </script>
+        <!--===============================================================================================-->
+        <script src="/vendor/daterangepicker/moment.min.js"></script>
+        <script src="/vendor/daterangepicker/daterangepicker.js"></script>
+        <!--===============================================================================================-->
+        <script src="/vendor/slick/slick.min.js"></script>
+        <script src="/js/slick-custom.js"></script>
+        <!--===============================================================================================-->
+        <script src="/vendor/parallax100/parallax100.js"></script>
+        <script>
+            $('.parallax100').parallax100();
+        </script>
+        <!--===============================================================================================-->
+        <script src="/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+        <script>
+            $('.gallery-lb').each(function () { // the containers for all your galleries
+                $(this).magnificPopup({
+                    delegate: 'a', // the selector for gallery item
+                    type: 'image',
+                    gallery: {
+                        enabled: true
+                    },
+                    mainClass: 'mfp-fade'
+                });
+            });
+        </script>
+        <!--===============================================================================================-->
+        <script src="/vendor/isotope/isotope.pkgd.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="/vendor/sweetalert/sweetalert.min.js"></script>
+        <script>
+            $('.js-addwish-b2').on('click', function (e) {
+                e.preventDefault();
+            });
+
+            $('.js-addwish-b2').each(function () {
+                var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+                $(this).on('click', function () {
+                    swal(nameProduct, "is added to wishlist !", "success");
+
+                    $(this).addClass('js-addedwish-b2');
+                    $(this).off('click');
+                });
+            });
+
+            $('.js-addwish-detail').each(function () {
+                var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+
+                $(this).on('click', function () {
+                    swal(nameProduct, "is added to wishlist !", "success");
+
+                    $(this).addClass('js-addedwish-detail');
+                    $(this).off('click');
+                });
+            });
+
+            /*---------------------------------------------*/
+
+            $('.js-addcart-detail').each(function () {
+                var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+                $(this).on('click', function () {
+                    swal(nameProduct, "is added to cart !", "success");
+                });
+            });
+
+        </script>
+        <!--===============================================================================================-->
+        <script src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+        <script>
+            $('.js-pscroll').each(function () {
+                $(this).css('position', 'relative');
+                $(this).css('overflow', 'hidden');
+                var ps = new PerfectScrollbar(this, {
+                    wheelSpeed: 1,
+                    scrollingThreshold: 1000,
+                    wheelPropagation: false,
+                });
+
+                $(window).on('resize', function () {
+                    ps.update();
+                })
+            });
+        </script>
+        <!--===============================================================================================-->
+        <script src="/js/main.js"></script>
+
+        <script>
+            function returnProduct(item, prodId) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, return it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/return',
+                            data: {
+                                item, prodId
+                            },
+                            method: 'post',
+                            success: (response) => {
+                                if (response) {
+                                    Swal.fire(
+                                        {
+                                            title: 'Sucess',
+                                            text: "Return Requested succedfully!",
+                                            icon: 'success',
+                                            showConfirmButton: false
+                                        }
+                                    )
+
+                                    setTimeout(function () {
+                                        location.reload();
+                                        return false;
+                                    }, 1500);
+
+                                } else {
+                                    Swal.fire(
+                                        'Error',
+                                        'Something went Wrong!!',
+                                        'Error'
+                                    )
+
+                                }
+                            }
+                        })
+
+
+                    }
+                })
+
+
+
+
+            }
+        </script>
+
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+            function orderStatus(){
+                alert('hello');
+            }
+            var trak = document.getElementById('progress');
+            var cls = -1
+            cls > 6 ? cls = 0 : cls++;
+            trak.className = 'progress-' + cls;
+        </script>
+
+
+        <%- include('./partials/footer.ejs') %>

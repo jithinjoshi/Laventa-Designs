@@ -1,0 +1,445 @@
+<%- include('./partials/header.ejs') %>
+    <link rel="stylesheet" href="/singleproduct/assets/css/bootstrap.min.css">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="/singleproduct/assets/css/style.css">
+    <!-- Header -->
+    <%- include('./partials/user-header.ejs') %>
+
+
+        <main class="main">
+            <div class="page-header text-center"
+                style="background-image: url('/singleproduct/assets/images/page-header-bg.jpg')">
+            </div><!-- End .page-header -->
+            <div class="page-header text-center"
+                style="background-image: url('/singleproduct/assets/images/page-header-bg.jpg')">
+                <div class="container">
+                    <h1 class="page-title">Checkout<span>Shop</span></h1>
+                </div><!-- End .container -->
+            </div><!-- End .page-header -->
+
+
+            <div class="page-content">
+                <div class="checkout">
+
+                    <div class="container pt-5">
+                        <form action="#" id="order-sub">
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
+
+                                    <% if(address){ %>
+                                        <div class="card card-dashboard shadow p-3 mb-5 bg-white rounded">
+                                            <div class="card-body">
+                                                <div class="d-flex mb-1">
+                                                    <input type="radio" class="mr-3" id="q156"
+                                                        onclick="fillForm('<%= address.fullname %>','<%= address.address %>','<%= address.city %>','<%= address.state %>','<%= address.pin %>','<%= address.tel %>')">
+                                                    <h3 class="card-title pt-1">default Address</h3>
+
+                                                    <!-- End .card-title -->
+                                                </div>
+                                                <p>
+                                                    <%= address.fullname %> <br>
+                                                        <%= address.address %> <br>
+                                                            <%= address.city %><br>
+                                                                <%= address.state %><br>
+                                                                    <%= address.pin %><br>
+                                                                        <span style="opacity: 0.9;">mob: </span>
+                                                                        <%= address.tel %><br>
+                                                                            <br>
+                                                </p>
+                                            </div><!-- End .card-body -->
+                                        </div><!-- End .card-dashboard -->
+
+                                        <% } %>
+
+                                            <label>Full Name *</label>
+                                            <input type="text" class="form-control" name="fullname" id="fullname"
+                                                required>
+
+                                            <!-- <label>Country *</label>
+                                    <input type="text" class="form-control" name="country" id="coun" required> -->
+
+                                            <label>Street address *</label>
+                                            <input type="text" class="form-control" name="address" id="address"
+                                                required>
+
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <label>Town / City *</label>
+                                                    <input type="text" class="form-control" name="city" id="city"
+                                                        required>
+                                                </div><!-- End .col-sm-6 -->
+
+                                                <div class="col-sm-6">
+                                                    <label>State*</label>
+                                                    <input type="text" class="form-control" name="state" id="state"
+                                                        required>
+                                                </div><!-- End .col-sm-6 -->
+                                            </div><!-- End .row -->
+
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <label>Postcode / ZIP *</label>
+                                                    <input type="text" class="form-control" name="zip" id="pin"
+                                                        required>
+                                                </div><!-- End .col-sm-6 -->
+
+                                                <div class="col-sm-6">
+                                                    <label>Phone *</label>
+                                                    <input type="tel" class="form-control" name="tel" id="tel" required>
+                                                    <input type="text" name="userid" hidden value="<%=user._id%>">
+                                                </div><!-- End .col-sm-6 -->
+                                            </div><!-- End .row -->
+
+
+
+                                </div><!-- End .col-lg-9 -->
+                                <aside class="col-lg-3">
+                                    <div class="summary ml-5">
+                                        <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
+
+                                        <table class="table table-summary">
+
+                                            <tbody>
+                                                <tr class="summary-subtotal">
+                                                    <td>Subtotal:</td>
+                                                    <td>₹<%= cartTotal %>
+                                                    </td>
+                                                </tr><!-- End .summary-subtotal -->
+                                                <tr>
+                                                    <td>Shipping:</td>
+                                                    <td>Free shipping</td>
+                                                </tr>
+                                                <tr class="summary-total">
+                                                    <td>Total:</td>
+                                                    <td>₹<%= cartTotal %>
+                                                    </td>
+                                                </tr><!-- End .summary-total -->
+                                            </tbody>
+                                        </table><!-- End .table table-summary -->
+
+                                        <div class="accordion-summary" id="accordion-payment">
+
+                                            <div class="card">
+                                                <label class="d-flex">
+                                                    <input type="radio" name="payment" value="COD" required />
+                                                    <span class="ml-5">Cash On Delivery</span>
+                                                </label>
+                                                <label>
+                                            </div><!-- End .card -->
+
+                                            <div class="card">
+                                                <label class="d-flex">
+                                                    <input type="radio" name="payment" value="ONLINE" required />
+                                                    <span class="ml-5">Online Payment</span>
+                                                </label>
+                                                <label>
+                                            </div><!-- End .card -->
+
+                                            <div class="card">
+                                                <label class="d-flex">
+                                                    <input type="radio" name="payment" value="PAYPAL" required />
+                                                    <span class="ml-5">Paypal</span>
+                                                </label>
+                                                <label>
+                                            </div><!-- End .card -->
+
+                                            <% if(cartTotal <=wallet){ %>
+                                                <div class="card">
+                                                    <label class="d-flex">
+                                                        <input type="radio" name="payment" value="WALLET" required />
+                                                        <span class="ml-5">Wallet</span>
+                                                    </label>
+                                                    <label>
+                                                </div><!-- End .card -->
+
+                                                <% } %>
+
+
+
+                                        </div><!-- End .accordion -->
+
+                                        <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+                                            <span class="btn-text">Place Order</span>
+                                            <span class="btn-hover-text">Proceed to Checkout</span>
+                                        </button>
+                                    </div><!-- End .summary -->
+                                </aside><!-- End .col-lg-3 -->
+                            </div><!-- End .row -->
+                        </form>
+                    </div><!-- End .container -->
+                </div><!-- End .checkout -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+
+
+
+
+
+
+        <!--===============================================================================================-->
+        <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/animsition/js/animsition.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/bootstrap/js/popper.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/select2/select2.min.js"></script>
+        <script>
+            $(".js-select2").each(function () {
+                $(this).select2({
+                    minimumResultsForSearch: 20,
+                    dropdownParent: $(this).next('.dropDownSelect2')
+                });
+            })
+        </script>
+        <!--===============================================================================================-->
+        <script src="vendor/daterangepicker/moment.min.js"></script>
+        <script src="vendor/daterangepicker/daterangepicker.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/slick/slick.min.js"></script>
+        <script src="js/slick-custom.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/parallax100/parallax100.js"></script>
+        <script>
+            $('.parallax100').parallax100();
+        </script>
+        <!--===============================================================================================-->
+        <script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+        <script>
+            $('.gallery-lb').each(function () { // the containers for all your galleries
+                $(this).magnificPopup({
+                    delegate: 'a', // the selector for gallery item
+                    type: 'image',
+                    gallery: {
+                        enabled: true
+                    },
+                    mainClass: 'mfp-fade'
+                });
+            });
+        </script>
+        <!--===============================================================================================-->
+        <script src="vendor/isotope/isotope.pkgd.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="vendor/sweetalert/sweetalert.min.js"></script>
+        <script>
+            $('.js-addwish-b2').on('click', function (e) {
+                e.preventDefault();
+            });
+
+            $('.js-addwish-b2').each(function () {
+                var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+                $(this).on('click', function () {
+                    swal(nameProduct, "is added to wishlist !", "success");
+
+                    $(this).addClass('js-addedwish-b2');
+                    $(this).off('click');
+                });
+            });
+
+            $('.js-addwish-detail').each(function () {
+                var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+
+                $(this).on('click', function () {
+                    swal(nameProduct, "is added to wishlist !", "success");
+
+                    $(this).addClass('js-addedwish-detail');
+                    $(this).off('click');
+                });
+            });
+
+            /*---------------------------------------------*/
+
+            $('.js-addcart-detail').each(function () {
+                var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+                $(this).on('click', function () {
+                    swal(nameProduct, "is added to cart !", "success");
+                });
+            });
+
+        </script>
+        <!--===============================================================================================-->
+        <script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+        <script>
+            $('.js-pscroll').each(function () {
+                $(this).css('position', 'relative');
+                $(this).css('overflow', 'hidden');
+                var ps = new PerfectScrollbar(this, {
+                    wheelSpeed: 1,
+                    scrollingThreshold: 1000,
+                    wheelPropagation: false,
+                });
+
+                $(window).on('resize', function () {
+                    ps.update();
+                })
+            });
+        </script>
+        <!--===============================================================================================-->
+        <script src="js/main.js"></script>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+        <script>
+            $("#order-sub").submit((e) => {
+                e.preventDefault()
+                $.ajax({
+                    url: '/checkout',
+                    method: 'post',
+                    data: $('#order-sub').serialize(),
+                    success: (response) => {
+                        if (response.stock === false) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Product Stock not available with this number',
+                            })
+                        } else {
+                            if (response.isCODPayment) {
+                                Swal.fire({
+                                    title: 'Success',
+                                    text: "Order Placed successfully",
+                                    icon: 'success',
+
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#3085d6',
+                                    confirmButtonText: 'Back to shop',
+                                    cancelButtonText: 'Go to Orders',
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.href = '/'
+                                    } else {
+                                        location.href = '/orderlist'
+                                    }
+                                })
+                                // location.href = '/orderlist'
+
+                            } else if (response.status) {
+                                razorpayPayment(response.order)
+
+                            } else if (response.isWalletPayment) {
+                                Swal.fire({
+                                    title: 'Success',
+                                    text: "Order Placed successfully",
+                                    icon: 'success',
+
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#3085d6',
+                                    confirmButtonText: 'Back to shop',
+                                    cancelButtonText: 'Go to Orders',
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.href = '/'
+                                    } else {
+                                        location.href = '/orderlist'
+                                    }
+                                })
+                            } else {
+                                for (let i = 0; i < response.links.length; i++) {
+                                    if (response.links[i].rel === 'approval_url') {
+                                        location.href = response.links[i].href
+
+                                    }
+                                }
+                            }
+
+                        }
+
+                    }
+                })
+            })
+
+            function razorpayPayment(order) {
+                var options = {
+                    "key": 'rzp_test_mx9PhzSBqaX7Sc', // Enter the Key ID generated from the Dashboard
+                    "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                    "currency": "INR",
+                    "name": "Laventa Designs",
+                    "description": "Test Transaction",
+                    "image": "https://media-exp1.licdn.com/dms/image/C560BAQHPIQMwzDv5aQ/company-logo_200_200/0/1519872329739?e=1669852800&v=beta&t=A71-29k7EfpSM92FjN6n-NUDr6T1CJlNJK077u0pAPg",
+                    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                    "handler": function (response) {
+                        // alert(response.razorpay_payment_id);
+                        // alert(response.razorpay_order_id);
+                        // alert(response.razorpay_signature);
+                        verifyPayment(response, order)
+                    },
+                    "prefill": {
+                        "name": "Jithin Joshi",
+                        "email": "jithinjoshi2000@gmail.com",
+                        "contact": "9539896423"
+                    },
+                    "notes": {
+                        "address": "Razorpay Corporate Office"
+                    },
+                    "theme": {
+                        "color": "#3399cc"
+                    }
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+            }
+
+            function verifyPayment(payment, order) {
+                $.ajax({
+                    url: '/verify-payment',
+                    data: {
+                        payment,
+                        order
+                    },
+                    method: 'post',
+                    success: (response) => {
+                        if (response.status) {
+                            Swal.fire({
+                                title: 'Success',
+                                text: "Order Placed successfully",
+                                icon: 'success',
+
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#3085d6',
+                                confirmButtonText: 'Back to shop',
+                                cancelButtonText: 'Go to Orders',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.href = '/'
+                                } else {
+                                    location.href = '/orderlist'
+                                }
+                            })
+
+                        } else {
+                            alert("payment failed")
+                        }
+                    }
+                })
+            }
+
+
+
+
+        </script>
+
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+            function fillForm(name, address, city, state, pin, phone) {
+                document.getElementById('fullname').value = name
+                document.getElementById('address').value = address
+                document.getElementById('city').value = city
+                document.getElementById('state').value = state
+                document.getElementById('pin').value = pin
+                document.getElementById('tel').value = phone
+
+
+
+
+
+
+            }
+        </script>
+
+        <%- include('./partials/footer.ejs') %>
