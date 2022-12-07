@@ -161,7 +161,7 @@ const orderlist = async (req, res) => {
   let cartCount = null;
   let wishlistCount = null;
   cartCount = await userHelper.getCartProductCount(userId);
-  const orders = await Order.find({});
+  const orders = await Order.find({userId:userId});
   wishlistCount = await userHelper.getWishlistProductCount(userId);
 
   var orderDates;
