@@ -192,9 +192,9 @@ module.exports = {
               { paymentMethod: "COD" },
               {
                 $or: [
-                  { 'products.status': 'placed' },
-                  { 'products.status': 'packed' },
-                  { 'products.status': 'shipped' },
+                  // { 'products.status': 'placed' },
+                  // { 'products.status': 'packed' },
+                  // { 'products.status': 'shipped' },
                   { 'products.status': 'delivered' }
                 ]
               }
@@ -482,7 +482,6 @@ module.exports = {
 
   offerPricing: (async (discount, price, id, category) => {
     return new Promise(async (resolve, reject) => {
-      console.log(discount,";",price,';',id,';',category.discount);
 
       if(discount == 0){
         if(category.discount != 0){
@@ -522,7 +521,6 @@ module.exports = {
             let id = pds._id;
             let price = pds.price
             let prod = await Product.findByIdAndUpdate({ _id: id }, { discount: discount })
-            console.log(prod, ":::::::::::::::::::::::::::::::::::");
 
             const doOffer = (price * discount) / 100;
             let discountAmount = Math.floor(price - doOffer);
@@ -534,7 +532,6 @@ module.exports = {
             let price = pds.price
             let id = pds._id;
             const doOffer = (price * pds.proOffer) / 100;
-            console.log(doOffer,":::::::::",pds.proOffer);
             let discountAmount = Math.floor(price - doOffer);
             let disc = pds.proOffer
             const offer = await Product.findOneAndUpdate({ _id: id }, { offerPrice: discountAmount,discount:disc});

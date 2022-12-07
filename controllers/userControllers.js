@@ -173,18 +173,6 @@ const orderlist = async (req, res) => {
   res.render("viewOrders", { user, cartCount, orders, wishlistCount, orderDates });
 };
 
-// const viewOrders = async (req,res)=>{
-//   const user = req.session.user;
-//   const userId = req.session.user._id;
-//   let cartCount = null;
-//   cartCount = await userHelper.getCartProductCount(userId);
-//   const orders = await Order.find({});
-
-//   res.render("myOrders",{user,cartCount,orders})
-
-// }
-
-//ordered products
 const viewOrders = async (req, res) => {
   let orderId = req.params.id;
   const user = req.session.user;
@@ -526,7 +514,6 @@ const postEditAddress = async (req, res) => {
 }
 
 const deleteCartProduct = async (req, res) => {
-  console.log("//////////////////////////////////////////////////////////////////////");
   let productId = req.body.proId;
   let isDeleteCartItem = userHelper.deleteCartItem(productId).then((condition) => {
     res.json(condition)

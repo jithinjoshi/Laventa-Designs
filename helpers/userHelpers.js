@@ -549,7 +549,7 @@ module.exports = {
         }
       );
 
-      console.log(":::::::::::::::::::::::::::::::::::");
+ 
       var quantity = updatedData.products.filter(function (i) {
         if (i.item == productId) {
           return i.quantity;
@@ -558,8 +558,6 @@ module.exports = {
       let product_quantity = quantity[0].quantity;
 
       let restoreStock = await Product.updateOne({ _id: productId }, { $inc: { stock: product_quantity } });
-      console.log(restoreStock);
-      console.log(">>>>>>>>>>>><<<<<<<<<<");
 
 
 
@@ -853,8 +851,6 @@ module.exports = {
 
           }
         })
-        console.log(pdt);
-        console.log(".............................");
         resolve(pdt)
 
       }
