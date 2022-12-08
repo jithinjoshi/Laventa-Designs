@@ -192,9 +192,9 @@ module.exports = {
               { paymentMethod: "COD" },
               {
                 $or: [
-                  // { 'products.status': 'placed' },
-                  // { 'products.status': 'packed' },
-                  // { 'products.status': 'shipped' },
+                  { 'products.status': 'placed' },
+                  { 'products.status': 'packed' },
+                  { 'products.status': 'shipped' },
                   { 'products.status': 'delivered' }
                 ]
               }
