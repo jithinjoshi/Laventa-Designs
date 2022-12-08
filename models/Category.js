@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 
 const categorySchema = new mongoose.Schema({
-    category: String,
+    category:{
+        type:String,
+        required:true
+    },
     discount:{
         type:Number,
         default:0
