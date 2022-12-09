@@ -30,9 +30,9 @@
                     </thead>
 
                     <tbody>
-                        <% orders.forEach(order => { %>
+                        <% orders.forEach((order,index) => { %>
                             <tr>
-                                <td  class="price-col"><%=orderDates%></td>
+                                <td  class="price-col"><%=orderDates[index]%></td>
 								<td class="price-col"><%= order.deliveryDetails.address %> </td>
                                 <td class="price-col">₹ <%= order.amount %> </td>
                                 <td class="price-col"><%= order.paymentMethod %> </td>

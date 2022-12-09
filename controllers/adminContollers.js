@@ -5,6 +5,7 @@ const Category = require("../models/Category");
 const User = require("../models/User");
 const Order = require("../models/Order");
 const Coupon = require("../models/Coupon");
+const Banner = require("../models/Banner");
 
 // GET METHODS
 
@@ -133,7 +134,7 @@ const postAddProducts = (req, res) => {
     proOffer:req.body.discounts
   };
 
-  console.log(req.body,productData);
+  console.log(req.files);
   adminHelper.doAddProduct(productData).then(async (data) => {
     if (data.status) {
 
@@ -344,9 +345,28 @@ const salesReport = async (req,res) =>{
   let monthlyReport = await adminHelper.getWeeklySales();
   let yearlyReport = await adminHelper.getYearlySales();
 
-  console.log(dailyReport,monthlyReport,yearlyReport);
+  let salesReport = await adminHelper.mainSales();
 
-  res.render('admin/salesReport',{yearlyReport,monthlyReport,dailyReport})
+  let orderDates = []
+  
+
+  var data = req.session.salesValue;
+  console.log(data);
+  if(data === undefined){
+    salesReport.forEach(sales => {
+      orderDates.push(sales.Date.toISOString().slice(0,10))
+    });
+
+
+    res.render('admin/salesReport',{salesReport,orderDates})
+  }else{
+    salesReport.forEach(sales => {
+      orderDates.push(sales.Date.toISOString().slice(0,10))
+    });
+    res.render('admin/salesReport',{salesReport:data,orderDates})
+  }
+
+ 
 
 
 }
@@ -385,6 +405,72 @@ const postEditCategory = async(req,res) =>{
   })
 }
 
+const banners = async (req,res) =>{
+  const banners = await Banner.find({});
+  console.log(banners);
+  console.log("...............................");
+  res.render("admin/banners",{banners});
+}
+
+const createbanner = async (req,res) =>{
+  const categories = await Category.find({})
+  res.render('admin/createBanner',{categories})
+}
+
+const sortReport = async (req,res) =>{
+
+  let toDate = req.body.toDate
+  let fromDate = req.body.fromDate;
+  
+
+
+  let type = req.body.data;
+  console.log(type);
+
+  if(type === 'all'){
+    let sortData = await adminHelper.mainSales()
+    if(sortData){
+      req.session.salesValue = undefined;
+      res.json(true);
+    }else{
+      res.json(false);
+    }
+
+  }else{
+    let sortData = await adminHelper.sortSalesReport(fromDate,toDate);
+    if(sortData){
+      req.session.salesValue = sortData;
+      res.json(true)
+    }
+  }
+}
+
+const postBanner = async (req,res) =>{
+  const bannerItems = {
+    title:req.body.title,
+    category:req.body.category,
+    description:req.body.description,
+    image:req.file
+  }
+ adminHelper.addBanner(bannerItems).then(()=>{
+    res.redirect("/admin/banner");
+ })
+  
+  
+}
+
+const deleteBanner = async (req,res) =>{
+  let id = req.body.delete;
+  let deleteBanner = adminHelper.deleteBanner(id);
+  if(deleteBanner){
+    res.redirect("/admin/banner")
+  }
+
+
+  
+  
+}
+
 
 module.exports = {
   loginAdmin,
@@ -419,5 +505,10 @@ module.exports = {
   getAddPdt,
   getEditPdt,
   editCategory,
-  postEditCategory
+  postEditCategory,
+  banners,
+  createbanner,
+  sortReport,
+  postBanner,
+  deleteBanner
 };

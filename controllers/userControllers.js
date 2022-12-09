@@ -9,6 +9,7 @@ const paypal = require("paypal-rest-sdk");
 
 const { default: mongoose } = require("mongoose");
 const Address = require("../models/Address");
+const Banner = require("../models/Banner");
 const client = require("twilio")(process.env.ACCOUNTSID, process.env.AUTHTOKEN);
 
 //GET METHODS
@@ -17,6 +18,7 @@ const client = require("twilio")(process.env.ACCOUNTSID, process.env.AUTHTOKEN);
 const getHome = async function (req, res, next) {
   const categories = await Category.find({});
   const products = await Product.find({});
+  const banners = await Banner.find({});
   const user = req.session.user;
   let cartCount = null;
   let wishlistCount = null;
@@ -29,7 +31,7 @@ const getHome = async function (req, res, next) {
     wishlistData = await userHelper.getWishlistProducts(user._id);
 
   }
-  res.render("index", { categories, products, user, cartCount, wishlistCount, wishlistData  });
+  res.render("index", { categories, products, user, cartCount, wishlistCount, wishlistData,banners });
 };
 
 //signup
@@ -39,6 +41,14 @@ const getSignUp = (req, res) => {
 
 //signin
 const getSignIn = function (req, res) {
+
+  if(req.query.h === "single"){
+    let proId = req.query.proId;
+    console.log(proId);
+    req.session.url = "/productdetails/"+proId
+  }else{
+    req.session.url = "/"
+  }
   res.render("signin", { message: req.flash("message") });
 };
 
@@ -161,16 +171,16 @@ const orderlist = async (req, res) => {
   let cartCount = null;
   let wishlistCount = null;
   cartCount = await userHelper.getCartProductCount(userId);
-  const orders = await Order.find({userId:userId});
+  var orders = await Order.find({userId:userId}).sort({Date:-1});
   wishlistCount = await userHelper.getWishlistProductCount(userId);
 
-  var orderDates;
+  var orderDates = [];
 
   orders.forEach(order => {
-    orderDates = order.Date.toISOString().slice(0, 10);
+    orderDates.push( order.Date.toISOString().slice(0, 10))
   });
 
-  res.render("viewOrders", { user, cartCount, orders, wishlistCount, orderDates });
+  res.render("viewOrders", { user, cartCount, orders, wishlistCount,orderDates});
 };
 
 const viewOrders = async (req, res) => {
@@ -245,6 +255,11 @@ const postSignIn = function (req, res) {
     if (result.status) {
       req.session.userlogin = true;
       req.session.user = result.user;
+      if(req.session.url){
+        res.redirect(req.session.url)
+        delete req.session.url
+        return
+      }
       res.redirect("/");
     } else if (result.access === false) {
       req.flash("message", "You are blocked");

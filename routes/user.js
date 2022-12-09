@@ -6,6 +6,9 @@ const verifyLogin = (req, res, next) => {
   if (req.session.user) {
     next();
   } else {
+    req.session.url = req.url
+    console.log("-----------------------------------------------------");
+    console.log(req.url);
     res.redirect("/signin");
   }
 };

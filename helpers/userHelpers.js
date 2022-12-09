@@ -767,7 +767,6 @@ module.exports = {
       // let productId = mongoose.Types.ObjectId(proId)
       console.log(proId);
       let deleteData = await Cart.updateOne({ 'products.item': proId }, { "$pull": { "products": { "item": proId } } })
-      console.log(deleteData, ":::::::::::::::::::::::::::::::::::");
       resolve({ status: true })
     })
   },

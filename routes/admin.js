@@ -29,6 +29,21 @@ const upload = multer({
   storage: storage,
 }).array("file", 4);
 
+//banner
+const bannerStorage = multer.diskStorage({
+  destination: "public/Banner",
+  filename: (req, file, cb, err) => {
+    if (err) {
+      console.log(err);
+    }
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const uploadBanner= multer({
+  storage: bannerStorage,
+}).single('file-input');
+
 /* Admin Login. */
 router.get("/", adminController.loginAdmin);
 
@@ -45,7 +60,6 @@ router.get("/addProduct", verifyAdminLogin, adminController.addProductsAdmin);
 
 router.post(
   "/addProduct",
-  verifyAdminLogin,
   upload,
   adminController.postAddProducts
 );
@@ -54,7 +68,6 @@ router.get("/edit/:id", verifyAdminLogin, adminController.editProducts);
 
 router.post(
   "/edit/:id",
-  verifyAdminLogin,
   upload,
   adminController.editProdcuts
 );
@@ -103,6 +116,14 @@ router.get("/addPdt",verifyAdminLogin,adminController.getAddPdt);
 
 router.get("/editPdt/:id",verifyAdminLogin,adminController.getEditPdt);
 router.get("/editCategory/:id",verifyAdminLogin,adminController.editCategory);
-router.post("/editCategory/:id",adminController.postEditCategory)
+router.post("/editCategory/:id",adminController.postEditCategory);
+
+router.get('/banner',verifyAdminLogin,adminController.banners);
+router.get('/create-banner',verifyAdminLogin,adminController.createbanner);
+router.post('/create-banner',uploadBanner,adminController.postBanner)
+
+router.post('/sortReport',adminController.sortReport);
+
+router.post('/deleteBanner',adminController.deleteBanner)
 
 module.exports = router;

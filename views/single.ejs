@@ -26,18 +26,18 @@
                             <h3>Laventa</h3>
                         </a>
                     </div>
-            
+
                     <!-- Icon header -->
                     <div class="wrap-icon-header flex-w flex-r-m m-r-15">
                         <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">
                             <i class="zmdi zmdi-search"></i>
                         </div>
-            
+
                         <!-- <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-1 js-show-cart"
                             >
                             <i class="zmdi zmdi-shopping-cart"></i>
                         </div> -->
-            
+
                         <% if(user){ %>
                             <div class="flex-c-m h-full p-r-25 bor6">
                                 <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-cart">
@@ -48,21 +48,22 @@
                                         <%= cartCount %>
                                     </span>
                                 </div>
-            
+
                             </div>
                             <% }else{ %>
                                 <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11  js-show-cart">
-                                    <a style="color:rgb(19, 18, 18);" href="/signin"><i class="zmdi zmdi-shopping-cart"></i></a>
+                                    <a style="color:rgb(19, 18, 18);" href="/signin"><i
+                                            class="zmdi zmdi-shopping-cart"></i></a>
                                 </div>
                                 <% } %>
-            
+
                                     <!-- <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-1"
                             >
                             <i class="zmdi zmdi-favorite-outline"></i>
                         </a> -->
-            
+
                                     <% if(user){ %>
-            
+
                                         <a href="/wishlist" class="dis-block icon-header-item cl2 hov-cl1 trans-04 ">
                                             <i class="zmdi zmdi-favorite-outline"></i>
                                             <span class="badge"
@@ -71,16 +72,17 @@
                                                 <%= wishlistCount %>
                                             </span>
                                         </a>
-            
+
                                         <% }else{ %>
-                                            <a href="/signin" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11"
+                                            <a href="/signin"
+                                                class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11"
                                                 data-notify="0">
                                                 <i class="zmdi zmdi-favorite-outline"></i>
                                             </a>
                                             <% } %>
-            
+
                     </div>
-            
+
                     <!-- Button show menu -->
                     <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
                         <span class="hamburger-box">
@@ -92,7 +94,7 @@
                 <div class="menu-mobile">
 
                     <ul class="main-menu-m">
-            
+
                         <% if(user){ %>
                             <li>
                                 <a href="/profile">
@@ -102,7 +104,7 @@
                             <li>
                                 <a href="/orderlist">My Orders</a>
                             </li>
-            
+
                             <li>
                                 <a href="/signout">Signout</a>
                             </li>
@@ -173,7 +175,7 @@
                                         <%= product.name %>
                                     </h1><!-- End .product-title -->
 
-                    
+
 
                                     <% if(product.discount> 0){ %>
                                         <div class="product-price">
@@ -193,7 +195,7 @@
                                         <% }else{ %>
                                             <div class="product-price">
                                                 ₹<%= product.price%>
-                                            </div><!-- End .product-price -->
+                                            </div>
                                             <% } %>
 
 
@@ -212,7 +214,7 @@
                                                                 onclick="addToCart('<%= product._id%>')">add to
                                                                 cart</button>
                                                             <% }else{ %>
-                                                                <a class="btn-product btn-cart" href="/signin">add to
+                                                                <a class="btn-product btn-cart" href="/signin?h=single&proId=<%= product._id %> ">add to
                                                                     cart</a>
 
                                                                 <% } %>
@@ -254,7 +256,7 @@
 
                     <!-- Block2 -->
 
-                    <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+                    <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
                         data-owl-options='{
                             "nav": false, 
                             "dots": true,
@@ -280,37 +282,52 @@
                                 }
                             }
                         }'>
-                        <% products.forEach(product => { %>
+                        <% products.forEach(product=> { %>
                             <div class="product product-7 text-center">
                                 <figure class="product-media">
-                                        <img src="/uploads/<%= product.image[0].filename %> " alt="Product image" class="product-image">
-    
+                                    <img src="/uploads/<%= product.image[0].filename %> " alt="Product image"
+                                        class="product-image">
+
                                     <div class="product-action-vertical" onclick="addToWishlist('<%= product._id %>')">
-                                        <a class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                        <a class="btn-product-icon btn-wishlist btn-expandable"><span>add to
+                                                wishlist</span></a>
                                     </div><!-- End .product-action-vertical -->
-    
+
                                     <div class="product-action">
-                                        <a href="/productdetails/<%= product._id  %>" class="btn-product"><span>View Product</span></a>
+                                        <a href="/productdetails/<%= product._id  %>" class="btn-product"><span>View
+                                                Product</span></a>
                                     </div><!-- End .product-action -->
                                 </figure><!-- End .product-media -->
-    
+
                                 <div class="product-body">
                                     <div class="product-cat">
                                         <%= product.category %>
                                     </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><%= product.name %> </h3><!-- End .product-title -->
-                                    <% if(product.discount > 0){ %>
+                                    <h3 class="product-title">
+                                        <%= product.name %>
+                                    </h3><!-- End .product-title -->
+                                    <% if(product.discount> 0){ %>
                                         <div class="product-price">
-                                            <span>₹<%= product.offerPrice %></span> <span class="ml-3 text-danger" style="text-decoration:line-through;">₹<%= product.price %></span> <span class="ml-3 text-success"><%= product.discount %> %</span>
+                                            <span>₹<%= product.offerPrice %></span> <span class="ml-3 text-danger"
+                                                style="text-decoration:line-through;">₹<%= product.price %></span> <span
+                                                class="ml-3 text-success">
+                                                <%= product.discount %> %
+                                            </span>
                                         </div><!-- End .product-price -->
-                                    <% } %> 
-                                    
-    
+                                        <% }else{ %>
+                                            <div class="product-price">
+                                                <span>₹<%= product.price %></span>
+
+                                            </div>
+
+                                        <% } %>
+
+
                                 </div><!-- End .product-body -->
                             </div><!-- End .product -->
-                            
-                        <% }); %> 
-                        
+
+                            <% }); %>
+
                     </div><!-- End .owl-carousel -->
 
                 </div>
@@ -795,35 +812,35 @@
 
 
         <script>
-			function addToWishlist(prodId) {
-				$.ajax({
-					url: '/wishlist/' + prodId,
-					method: 'get',
-					success: (response) => {
-						if (response.status) {
-							let count = $("#wishlist-count").html()
-							count = parseInt(count) + 1;
-							$("#wishlist-count").html(count)
-							swal({
-								title: "Good job!",
-								text: "Item added to the cart",
-								timer: 1000,
-								icon: "success",
-								button: false,
-							});
-						} else {
-							swal({
-								title: "oops!",
-								text: "Items are out of stock",
-								timer: 1000,
-								icon: "error",
-								button: false,
-							});
+            function addToWishlist(prodId) {
+                $.ajax({
+                    url: '/wishlist/' + prodId,
+                    method: 'get',
+                    success: (response) => {
+                        if (response.status) {
+                            let count = $("#wishlist-count").html()
+                            count = parseInt(count) + 1;
+                            $("#wishlist-count").html(count)
+                            swal({
+                                title: "Good job!",
+                                text: "Item added to the cart",
+                                timer: 1000,
+                                icon: "success",
+                                button: false,
+                            });
+                        } else {
+                            swal({
+                                title: "oops!",
+                                text: "Items are out of stock",
+                                timer: 1000,
+                                icon: "error",
+                                button: false,
+                            });
 
-						}
-					}
-				})
-			}
+                        }
+                    }
+                })
+            }
         </script>
 
         <!-- Plugins JS File -->

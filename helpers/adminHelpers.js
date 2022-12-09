@@ -5,7 +5,8 @@ const Category = require('../models/Category');
 const Order = require('../models/Order');
 const User = require('../models/User');
 const Coupon = require('../models/Coupon');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const Banner = require('../models/Banner');
 
 module.exports = {
   doLogin: (userData) => {
@@ -45,7 +46,7 @@ module.exports = {
           stock: userData.stock,
           discount: userData.discount,
           image: userData.image,
-          proOffer:userData.proOffer
+          proOffer: userData.proOffer
         }
       );
       newProduct.save().then((err, data) => {
@@ -483,29 +484,29 @@ module.exports = {
   offerPricing: (async (discount, price, id, category) => {
     return new Promise(async (resolve, reject) => {
 
-      if(discount == 0){
-        if(category.discount != 0){
+      if (discount == 0) {
+        if (category.discount != 0) {
           var doOffer = (price * category.discount) / 100;
-        let discountAmount = Math.floor(price - doOffer);
-        const offer = await Product.findOneAndUpdate({ _id: id }, { offerPrice: discountAmount });
-        }else{
+          let discountAmount = Math.floor(price - doOffer);
+          const offer = await Product.findOneAndUpdate({ _id: id }, { offerPrice: discountAmount });
+        } else {
           var doOffer = (price * discount) / 100;
           let discountAmount = Math.floor(price - doOffer);
           const offer = await Product.findOneAndUpdate({ _id: id }, { offerPrice: discountAmount });
         }
-      }else{
-        if(category.discount != 0 && category.discount > discount){
+      } else {
+        if (category.discount != 0 && category.discount > discount) {
           var doOffer = (price * category.discount) / 100;
-        let discountAmount = Math.floor(price - doOffer);
-        const offer = await Product.findOneAndUpdate({ _id: id }, { offerPrice: discountAmount });
-        }else{
+          let discountAmount = Math.floor(price - doOffer);
+          const offer = await Product.findOneAndUpdate({ _id: id }, { offerPrice: discountAmount });
+        } else {
           var doOffer = (price * discount) / 100;
           let discountAmount = Math.floor(price - doOffer);
           const offer = await Product.findOneAndUpdate({ _id: id }, { offerPrice: discountAmount });
         }
       }
 
-      
+
       resolve();
 
     })
@@ -527,14 +528,14 @@ module.exports = {
 
 
             const offer = await Product.findOneAndUpdate({ _id: id }, { offerPrice: discountAmount });
-    
-          }else{
+
+          } else {
             let price = pds.price
             let id = pds._id;
             const doOffer = (price * pds.proOffer) / 100;
             let discountAmount = Math.floor(price - doOffer);
             let disc = pds.proOffer
-            const offer = await Product.findOneAndUpdate({ _id: id }, { offerPrice: discountAmount,discount:disc});
+            const offer = await Product.findOneAndUpdate({ _id: id }, { offerPrice: discountAmount, discount: disc });
 
           }
 
@@ -544,7 +545,137 @@ module.exports = {
         resolve()
       }
     })
-  })
+  }),
+
+  sortSalesReport: (async (fromDate, toDate) => {
+    return new Promise(async (resolve, reject) => {
+      let newFromDate = new Date(fromDate);
+      let newToDate = new Date(toDate)
+
+      if(toDate === fromDate){
+        var day = 60 * 60 * 24 * 1000;
+        newToDate = new Date(newFromDate.getTime() + day);
+      }
+      // let myOrders = await Order.find(
+      //   { $and: [{ Date: { $gte: newFromDate } }, { Date: { $lt: newToDate } }] }
+      // );
+
+      let salesData = await Order.aggregate([
+        {
+          $match: { $and: [{ Date: { $gte: newFromDate } }, { Date: { $lt: newToDate } }] }
+        },
+        {
+          $unwind: "$products"
+        },
+        {
+          $project: {
+            item: "$products.item",
+            quantity: "$products.quantity",
+            Date: 1,
+            paymentMethod: 1,
+            status: 1,
+            amount: 1,
+          }
+        },
+        {
+          $lookup: {
+            from: "products",
+            localField: "item",
+            foreignField: "_id",
+            as: "product"
+          }
+        },
+        {
+          $project: {
+            item: 1,
+            quantity: 1,
+            Date: 1,
+            paymentMethod: 1,
+            status: 1,
+            amount: 1,
+            product: { $arrayElemAt: ["$product", 0] }
+          }
+        }
+
+
+      ])
+
+      console.log(salesData);
+      resolve(salesData)
+
+    })
+  }),
+
+  mainSales : async()=>{
+    return new Promise(async (resolve,reject)=>{
+      let myData = await Order.aggregate([
+        {
+          $unwind: "$products"
+        },
+        {
+          $project: {
+            item: "$products.item",
+            quantity: "$products.quantity",
+            Date: 1,
+            paymentMethod: 1,
+            status: 1,
+            amount: 1,
+          }
+        },
+        {
+          $lookup: {
+            from: "products",
+            localField: "item",
+            foreignField: "_id",
+            as: "product"
+          }
+        },
+        {
+          $project: {
+            item: 1,
+            quantity: 1,
+            Date: 1,
+            paymentMethod: 1,
+            status: 1,
+            amount: 1,
+            product: { $arrayElemAt: ["$product", 0] }
+          }
+        }
+    
+      ])
+
+      console.log(myData);
+      resolve(myData)
+    })
+  },
+
+  addBanner : async(bannerItems) =>{
+    return new Promise((resolve,reject) =>{
+      const newBanner = new Banner({
+        title:bannerItems.title,
+        category:bannerItems.category,
+        description:bannerItems.description,
+        image:bannerItems.image
+      })
+
+      newBanner.save().then(()=>{
+        console.log('data is adde to the db');
+        resolve();
+      })
+
+    })
+  },
+
+  deleteBanner : async(bannerId) =>{
+    return new Promise(async (resolve,reject)=>{
+      const data = await Banner.findByIdAndRemove({_id:bannerId});
+      if(data){
+        resolve(true)
+      }
+    })
+  }
+
+
 
 
 

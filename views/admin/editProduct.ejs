@@ -159,14 +159,15 @@
                         <h3 class="text-center text-inverse">Edit Product</h3>
                         <hr>
 
-                        <form class="container"  method="post" action="/admin/edit/<%= item._id %>"
+                        <form class="container" method="post" action="/admin/edit/<%= item._id %>"
                             enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-lg-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label class="text-inverse" for="validationCustom01">Product Name</label>
                                         <input type="text" class="form-control" id="name" name="name"
-                                            placeholder=" Enter product name" value="<%= item.name %>" onkeyup="validName()">
+                                            placeholder=" Enter product name" value="<%= item.name %>"
+                                            onkeyup="validName()">
                                         <span id="names" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -175,14 +176,14 @@
                                         <label class="text-inverse" for="validationCustom02">Product Category</label>
                                         <select name="category" class="form-control">
                                             <option>
-                                              <%= item.category %>
+                                                <%= item.category %>
                                             </option>
                                             <%categories.forEach(category=> { %>
-                                              <option>
-                                                <%= category.category %>
-                                              </option>
-                                              <% }); %>
-                                          </select>
+                                                <option>
+                                                    <%= category.category %>
+                                                </option>
+                                                <% }); %>
+                                        </select>
                                         <!-- <input type="text" class="form-control" id="validationCustom02"
                                             placeholder="Product Category" value="Last Name" required> -->
                                     </div>
@@ -193,7 +194,8 @@
                                     <div class="form-group">
                                         <label class="text-inverse" for="inputEmail4">Product Price</label>
                                         <input type="number" class="form-control" name="price" id="price"
-                                            placeholder=" Enter product price" value="<%= item.price%>" onkeyup="validPrice()">
+                                            placeholder=" Enter product price" value="<%= item.price%>"
+                                            onkeyup="validPrice()">
                                         <span id="prices" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -213,7 +215,8 @@
                                     <div class="form-group">
                                         <label class="text-inverse" for="inputEmail4">Product Stock</label>
                                         <input type="number" id="stock" class="form-control"
-                                            placeholder=" Enter product stock " name="stock" value="<%= item.stock%>" onkeyup="validStock()">
+                                            placeholder=" Enter product stock " name="stock" value="<%= item.stock%>"
+                                            onkeyup="validStock()">
                                         <span id="stocks" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -232,15 +235,16 @@
                                         <label class="custom-file">
                                             <div class="form-group">
                                                 <img id="imgView" src="/uploads/<%= item.image[0].filename %>" alt=""
-                                                  style="height:70px ;margin-bottom: 15px;" class="ml-2">
+                                                    style="height:70px ;margin-bottom: 15px;" class="ml-2">
                                                 <img id="imgView1" src="/uploads/<%= item.image[1].filename %>" alt=""
-                                                  style="height:70px ;margin-bottom: 15px;" class="ml-2">
+                                                    style="height:70px ;margin-bottom: 15px;" class="ml-2">
                                                 <img id="imgView2" src="/uploads/<%= item.image[2].filename %>" alt=""
-                                                  style="height:70px ;margin-bottom: 15px;" class="ml-2">
+                                                    style="height:70px ;margin-bottom: 15px;" class="ml-2">
                                                 <img id="imgView3" src="/uploads/<%= item.image[3].filename %>" alt=""
-                                                  style="height:70px ;margin-bottom: 15px;" class="ml-2">
-                                                <input type="file" class="form-control" id="mdate" name="file" onchange="viewImage(event)" multiple>
-                                              </div>
+                                                    style="height:70px ;margin-bottom: 15px;" class="ml-2">
+                                                <input type="file" class="form-control" id="mdate" name="file"
+                                                    onchange="viewImage(event)" multiple>
+                                            </div>
 
                                         </label>
                                     </div>
@@ -249,7 +253,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-lg-12 col-sm-12 col-12 text-center">
-                                    <button class="btn btn-info" onclick="return validation()" type="submit">Edit   
+                                    <button class="btn btn-info" onclick="return validation()" type="submit">Edit
                                         Product</button>
                                 </div>
                             </div>
@@ -261,13 +265,13 @@
             <script>
 
                 function viewImage(event) {
-                  document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0]);
-                  document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[1])
-                  document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[2])
-                  document.getElementById('imgView3').src = URL.createObjectURL(event.target.files[3])
+                    document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0]);
+                    document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[1])
+                    document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[2])
+                    document.getElementById('imgView3').src = URL.createObjectURL(event.target.files[3])
                 }
-          
-              </script>
+
+            </script>
 
             <script>
                 var proNames = document.getElementById('names');
@@ -366,7 +370,9 @@
                 }
             </script>
 
-            
+            <script defer src="https://cdn.crop.guide/loader/l.js?c=ZHMBSN"></script>
+
+
 
         </body>
 

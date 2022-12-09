@@ -7,20 +7,22 @@
 		<section class="section-slide">
 			<div class="wrap-slick1">
 				<div class="slick1">
-					<div class="item-slick1" style="background-image: url(images/slide-01.jpg);">
+
+					<% banners.forEach(banner => { %>
+						<div class="item-slick1" style="background-image: url('/Banner/<%= banner.image[0].filename%>');">
 						<div class="container h-full">
 							<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
 								<div class="layer-slick1 animated visible-false" data-appear="fadeInDown"
 									data-delay="0">
 									<span class="ltext-101 cl2 respon2">
-										Women Collection 2018
+										<%= banner.description%>
 									</span>
 								</div>
 
 								<div class="layer-slick1 animated visible-false" data-appear="fadeInUp"
 									data-delay="800">
 									<h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">
-										NEW SEASON
+										<%= banner.title%>
 									</h2>
 								</div>
 
@@ -33,61 +35,10 @@
 							</div>
 						</div>
 					</div>
+					<% }); %> 
+					
 
-					<div class="item-slick1" style="background-image: url(images/slide-02.jpg);">
-						<div class="container h-full">
-							<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
-								<div class="layer-slick1 animated visible-false" data-appear="rollIn" data-delay="0">
-									<span class="ltext-101 cl2 respon2">
-										Men New-Season
-									</span>
-								</div>
-
-								<div class="layer-slick1 animated visible-false" data-appear="lightSpeedIn"
-									data-delay="800">
-									<h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">
-										Jackets & Coats
-									</h2>
-								</div>
-
-								<div class="layer-slick1 animated visible-false" data-appear="slideInUp"
-									data-delay="1600">
-									<a href="#products"
-										class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-										Shop Now
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="item-slick1" style="background-image: url(images/slide-03.jpg);">
-						<div class="container h-full">
-							<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
-								<div class="layer-slick1 animated visible-false" data-appear="rotateInDownLeft"
-									data-delay="0">
-									<span class="ltext-101 cl2 respon2">
-										Men Collection 2018
-									</span>
-								</div>
-
-								<div class="layer-slick1 animated visible-false" data-appear="rotateInUpRight"
-									data-delay="800">
-									<h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">
-										New arrivals
-									</h2>
-								</div>
-
-								<div class="layer-slick1 animated visible-false" data-appear="rotateIn"
-									data-delay="1600">
-									<a href="#products"
-										class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-										Shop Now
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 		</section>
@@ -204,17 +155,17 @@
 					<!-- Search product -->
 					<div class="dis-none panel-search w-full p-t-10 p-b-15">
 						<div class="bor8 dis-flex p-l-15">
-							
 
-							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" id="search-data"
-								placeholder="Search">
-								
-									<button  style="background-color:rgb(69, 69, 235); width:8rem;" onclick="searchItem()">
-										<i class="zmdi zmdi-search"></i>
-									</button>
-	
-								
-								
+
+							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product"
+								id="search-data" placeholder="Search">
+
+							<button style="background-color:rgb(69, 69, 235); width:8rem;" onclick="searchItem()">
+								<i class="zmdi zmdi-search"></i>
+							</button>
+
+
+
 						</div>
 					</div>
 
@@ -230,7 +181,9 @@
 						<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
 							<div class="block2">
 								<div class="block2-pic hov-img0">
-									<img src="/uploads/<%= product.image[0].filename %> " alt="IMG-PRODUCT">
+									<a href="/productdetails/<%= product._id  %> ">
+										<img src="/uploads/<%= product.image[0].filename %> " alt="IMG-PRODUCT">
+									</a>
 
 									<% if(product.stock !==0 && user){ %>
 										<button
@@ -769,14 +722,14 @@
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 		<script>
-			function searchItem(){
+			function searchItem() {
 				let data = document.getElementById('search-data').value;
 				$.ajax({
-					url:'/search',
-					method:'post',
-					data:{data},
-					success:(response) =>{
-						if(response.status){
+					url: '/search',
+					method: 'post',
+					data: { data },
+					success: (response) => {
+						if (response.status) {
 							location.href = "/search/" + data
 						}
 					}

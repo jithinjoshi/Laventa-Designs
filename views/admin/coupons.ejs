@@ -27,16 +27,16 @@
                 <div class="card-body pb-0">
 
 
-                  <table class="table table-nowrap ms-5" style="margin-top: 6%; overflow-x: hidden;">
+                  <table class="table table-nowrap" style="margin-top: 6%; overflow-x: hidden;">
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">No.</th>
-                            <th scope="col">Coupon Name</th>
+                            <th scope="col" class="d-none d-sm-block">Coupon Name</th>
                             <th scope="col">Discount</th>
                             <th scope="col">Coupon Code</th>
-                            <th scope="col">Activation Date</th>
-                            <th scope="col">Expiry Date</th>
-                            <th scope="col">Redemptions</th>
+                            <th scope="col" class="d-none d-sm-block">Activation Date</th>
+                            <th scope="col" >Expiry Date</th>
+                            <th scope="col" class="d-none d-sm-block">Redemptions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,7 +45,7 @@
                             <% couponList.forEach((coupon,index) => { %>
                             <tr>
                                 <td><p class="text-heading font-semibold"><%= index+1 %></p></td>
-                                <td>
+                                <td class="d-none d-sm-block">
                                   <p class="text-heading font-semibold">
                                     <%= coupon.couponName %>    
                                   </p> 
@@ -61,7 +61,7 @@
                                     
                                   </td>
 
-                                  <td>
+                                  <td class="d-none d-sm-block">
                                     <p class="text-heading font-semibold">
                                       <%= couponActivationDate %>  
                                   </p>
@@ -73,7 +73,7 @@
                                   </p>
                                   </td>
 
-                                  <td>
+                                  <td class="d-none d-sm-block">
                                     <p class="text-heading font-semibold ">
                                       <%= coupon.users.length %>  
                                   </p>

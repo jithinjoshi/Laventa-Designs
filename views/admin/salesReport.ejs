@@ -1,21 +1,24 @@
 <%- include('../partials/admin.ejs') %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+
 
 
     <%- include('../partials/admin-dashboard.ejs') %>
 
 
         <main id="main" class="main">
-            <div class="d-flex m-4">
-                <button class="btn btn-primary ms-3" onclick="yearlyReportPDF()">Yearly Report</button>
-                <button class="btn btn-primary ms-3" onclick="monthlyReportPDF()">Monthly Report</button>
-                <button class="btn btn-primary ms-3" onclick="weeklyReportPDF()">Daily Report</button>
+            <div class="pagetitle" style="display: flex;">
+                <h1>Sales Report</h1>
+
+            </div><!-- End Page Title -->
+            <div class="m-2">
+                <span>From: </span> <input type="date" id="fromDate"> <span>To: </span><input type="date" id="toDate">
+                <button class="btn btn-sm btn-primary " onclick="dateAnalysis()">Search</button>
+                <button class="btn btn-sm btn-primary ms-2" onclick="allData('all')">All</button>
+                <button class="btn btn-success ms-5" onclick="orderReportPDF()">Download PDF</button>
             </div>
 
-            <div class="pagetitle" style="display: flex;">
-                <h1>Yearly Report</h1>
-
-            </div><!-- End Page Title -->
-
             <section class="section dashboard">
                 <div class="row">
 
@@ -31,42 +34,50 @@
                                     <div class="card-body pb-0">
 
 
-                                        <table class="table table-nowrap ms-5" id="yearly-table"
-                                            style="margin-top: 6%; overflow-x: hidden;">
+                                        <table class="table table-nowrap " style="margin-top: 8%; overflow-x: hidden;" id="myTable">
                                             <thead class="thead-light">
                                                 <tr>
-                                                    <th scope="col">NO.</th>
-                                                    <th scope="col">Year</th>
-                                                    <th scope="col">Orders</th>
-                                                    <th scope="col">Total</th>
+                                                    <th>No.</th>
+                                                    <th>Date</th>
+                                                    <th>Product Name</th>
+                                                    <th>Quantity</th>
+                                                    <th>Price</th>
+                                                    <th class="d-none d-sm-block">Payment method</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <% yearlyReport.forEach((year,index)=> { %>
+                                                <% salesReport.forEach((sale,index)=> { %>
+
                                                     <tr>
                                                         <td>
                                                             <%= index+1 %>
                                                         </td>
                                                         <td>
-                                                            <p class="text-heading font-semibold">
-                                                                <%= year._id %>
-                                                            </p>
+                                                            <%= orderDates[index] %>
                                                         </td>
                                                         <td>
-                                                            <p class="text-heading font-semibold">
-                                                                <%= year.count %>
-
-                                                            </p>
+                                                            <%= sale.product.name %>
                                                         </td>
 
                                                         <td>
-                                                            <p class="text-heading font-semibold">
-                                                                <%= year.total %>
-                                                            </p>
+                                                            <%= sale.quantity %>
+                                                        </td>
+
+                                                        <td>
+                                                            <%= sale.product.offerPrice %>
+                                                        </td>
+
+                                                        <td class="d-none d-sm-block">
+                                                            <%= sale.paymentMethod %>
 
                                                         </td>
                                                     </tr>
-                                                    <% }) %>
+
+
+
+                                                    <% }); %>
+
+
                                             </tbody>
                                         </table>
 
@@ -82,147 +93,9 @@
                 </div>
             </section>
 
-            <div class="pagetitle" style="display: flex;">
-                <h1>Monthly Report</h1>
-
-            </div><!-- End Page Title -->
-
-            <section class="section dashboard">
-                <div class="row">
-
-                    <!-- Left side columns -->
-                    <div class="col-lg-12">
-                        <div class="row">
 
 
-                            <!-- Top Selling -->
-                            <div class="col-12">
-                                <div class="card top-selling">
 
-                                    <div class="card-body pb-0">
-
-
-                                        <table class="table table-nowrap ms-5" id="monthly-table"
-                                            style="margin-top: 6%; overflow-x: hidden;">
-                                            <thead class="thead-light">
-                                                <tr>
-                                                    <th scope="col">NO.</th>
-                                                    <th scope="col">Month</th>
-                                                    <th scope="col">Orders</th>
-                                                    <th scope="col">Total</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <% monthlyReport.forEach((month,index)=> { %>
-                                                    <tr>
-                                                        <td>
-                                                            <%= index+1 %>
-                                                        </td>
-                                                        <td>
-                                                            <p class="text-heading font-semibold">
-                                                                <%= month._id %>
-                                                            </p>
-                                                        </td>
-                                                        <td>
-                                                            <p class="text-heading font-semibold">
-                                                                <%= month.count %>
-
-                                                            </p>
-                                                        </td>
-
-                                                        <td>
-                                                            <p class="text-heading font-semibold">
-                                                                <%= month.total %>
-                                                            </p>
-
-                                                        </td>
-                                                    </tr>
-                                                    <% }) %>
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-
-                                </div>
-                            </div><!-- End Top Selling -->
-
-                        </div>
-                    </div><!-- End Left side columns -->
-
-
-                </div>
-            </section>
-
-            <div class="pagetitle" style="display: flex;">
-                <h1>Daily Report</h1>
-
-            </div><!-- End Page Title -->
-
-            <section class="section dashboard">
-                <div class="row">
-
-                    <!-- Left side columns -->
-                    <div class="col-lg-12">
-                        <div class="row">
-
-
-                            <!-- Top Selling -->
-                            <div class="col-12">
-                                <div class="card top-selling">
-
-                                    <div class="card-body pb-0">
-
-
-                                        <table class="table table-nowrap ms-5" id="weekly-table"
-                                            style="margin-top: 6%; overflow-x: hidden;">
-                                            <thead class="thead-light">
-                                                <tr>
-                                                    <th scope="col">NO.</th>
-                                                    <th scope="col">Day</th>
-                                                    <th scope="col">Orders</th>
-                                                    <th scope="col">Total</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <% dailyReport.forEach((day,index)=> { %>
-                                                    <tr>
-                                                        <td>
-                                                            <%= index+1 %>
-                                                        </td>
-                                                        <td>
-                                                            <p class="text-heading font-semibold">
-                                                                <%= day._id %>
-                                                            </p>
-                                                        </td>
-                                                        <td>
-                                                            <p class="text-heading font-semibold">
-                                                                <%= day.count %>
-
-                                                            </p>
-                                                        </td>
-
-                                                        <td>
-                                                            <p class="text-heading font-semibold">
-                                                                <%= day.total %>
-                                                            </p>
-
-                                                        </td>
-                                                    </tr>
-                                                    <% }) %>
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-
-                                </div>
-                            </div><!-- End Top Selling -->
-
-                        </div>
-                    </div><!-- End Left side columns -->
-
-
-                </div>
-            </section>
 
         </main><!-- End #main -->
         <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
@@ -242,7 +115,8 @@
         <script src="/assets/js/main.js"></script>
 
         <script>
-            function weeklyReportPDF() {
+            
+            function orderReportPDF() {
                 var doc = new jsPDF('p', 'pt', 'letter');
                 var htmlstring = '';
                 var tempVarToCheckPageHeight = 0;
@@ -264,56 +138,9 @@
                 };
                 var y = 20;
                 doc.setLineWidth(2);
-                doc.text(200, y = y + 30, "Weekly Sales Report");
+                doc.text(200, y = y + 30, "Sales Report");
                 doc.autoTable({
-                    html: '#weekly-table',
-                    startY: 70,
-                    theme: 'grid',
-                    columnStyles: {
-                        0: {
-                            cellWidth: 180,
-                        },
-                        1: {
-                            cellWidth: 80,
-                        },
-                        2: {
-                            cellWidth: 80,
-                        },
-
-                    },
-                    styles: {
-                        minCellHeight: 40
-                    }
-                })
-                doc.save('sales-weekly-report.pdf');
-            }
-
-
-            function monthlyReportPDF() {
-                var doc = new jsPDF('p', 'pt', 'letter');
-                var htmlstring = '';
-                var tempVarToCheckPageHeight = 0;
-                var pageHeight = 0;
-                pageHeight = doc.internal.pageSize.height;
-                specialElementHandlers = {
-                    // element with id of "bypass" - jQuery style selector  
-                    '#bypassme': function (element, renderer) {
-                        // true = "handled elsewhere, bypass text extraction"  
-                        return true
-                    }
-                };
-                margins = {
-                    top: 150,
-                    bottom: 60,
-                    left: 40,
-                    right: 40,
-                    width: 600
-                };
-                var y = 20;
-                doc.setLineWidth(2);
-                doc.text(200, y = y + 30, "Monthly Sales Report");
-                doc.autoTable({
-                    html: '#monthly-table',
+                    html: '#myTable',
                     startY: 70,
                     theme: 'grid',
                     columnStyles: {
@@ -331,59 +158,61 @@
                         minCellHeight: 40
                     }
                 })
-                doc.save('sales-monthly-report.pdf');
+                doc.save('sales-report.pdf');
             }
 
-
-            function yearlyReportPDF() {
-                var doc = new jsPDF('p', 'pt', 'letter');
-                var htmlstring = '';
-                var tempVarToCheckPageHeight = 0;
-                var pageHeight = 0;
-                pageHeight = doc.internal.pageSize.height;
-                specialElementHandlers = {
-                    // element with id of "bypass" - jQuery style selector  
-                    '#bypassme': function (element, renderer) {
-                        // true = "handled elsewhere, bypass text extraction"  
-                        return true
-                    }
-                };
-                margins = {
-                    top: 150,
-                    bottom: 60,
-                    left: 40,
-                    right: 40,
-                    width: 600
-                };
-                var y = 20;
-                doc.setLineWidth(2);
-                doc.text(200, y = y + 30, "Yearly Sales Report");
-                doc.autoTable({
-                    html: '#yearly-table',
-                    startY: 70,
-                    theme: 'grid',
-                    columnStyles: {
-                        0: {
-                            cellWidth: 180,
-                        },
-                        1: {
-                            cellWidth: 80,
-                        },
-                        2: {
-                            cellWidth: 80,
-                        },
-                    },
-                    styles: {
-                        minCellHeight: 40
-                    }
-                })
-                doc.save('sales-yearly-report.pdf');
-            }
         </script>
 
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+
+        <script>
+            function dateAnalysis() {
+                let fromDate = document.getElementById('fromDate').value
+                let toDate = document.getElementById('toDate').value
+
+                $.ajax({
+                    url: '/admin/sortReport',
+                    data: {
+                        fromDate,
+                        toDate
+                    },
+                    method: 'post',
+                    success: (response) => {
+                        if (response) {
+                            location.reload()
+                        }
+                    }
+                })
+
+            }
+        </script>
+
+        <script>
+            function allData(data) {
+                $.ajax({
+                    url: '/admin/sortReport',
+                    data: {
+                        data
+                    },
+                    method: 'post',
+                    success: (response) => {
+                        if (response) {
+                            location.reload()
+                        }
+                    }
+                })
+            }
+        </script>
+
+
+        <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#myTable').DataTable();
+            });
+        </script>
 
         <%- include('../partials/footer.ejs') %>
