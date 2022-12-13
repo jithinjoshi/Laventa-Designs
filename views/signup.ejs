@@ -1,49 +1,55 @@
-<%- include('./partials/admin-header.ejs')  %> 
+<%- include('./partials/admin-header.ejs') %>
 
-<div class="vh-100 d-flex justify-content-center align-items-center ">
-    <div class="col-md-5 p-5 shadow-sm border rounded-5 border-primary bg-white">
-        <h2 class="text-center mb-4 text-primary">Signup Here</h2>
-        <form method="post" action="/signup">
-            <% if(message.length >0){ %>
-                <span class="text-danger"><%= message %> </span>
-            <% } %> 
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Username</label>
-                <input type="name" class="form-control border border-primary" name="username" id="name" aria-describedby="emailHelp" onkeyup="validName()">
-                <span id="names" class="text-danger"></span>
+    <div class="vh-100 d-flex justify-content-center align-items-center ">
+        <div class="col-md-5 p-5 shadow-sm border rounded-5 border-primary bg-white">
+            <h4 class="text-center mb-2 text-secondary">Laventa Designs</h4>
+            <h2 class="text-center mb-4 text-primary">Signup</h2>
+            <form method="post" action="/signup">
+                <% if(message.length>0){ %>
+                    <span class="text-danger">
+                        <%= message %>
+                    </span>
+                    <% } %>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Username</label>
+                            <input type="name" class="form-control border border-primary" name="username" id="name"
+                                aria-describedby="emailHelp" onkeyup="validName()">
+                            <span id="names" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Email address</label>
+                            <input type="email" class="form-control border border-primary" name="email" id="email"
+                                aria-describedby="emailHelp" onkeyup="validEmail()">
+                            <span id="emails" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Mobile Number</label>
+                            <input type="number" class="form-control border border-primary" name="mobile" id="phone"
+                                aria-describedby="emailHelp" onkeyup="validPhone()">
+                            <span id="phones" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input type="password" class="form-control border border-primary" name="password"
+                                id="password" onkeyup="validPassowrd()">
+                            <span id="passwords" class="text-danger"></span>
+                        </div>
+                        <div class="d-grid">
+                            <button class="btn btn-primary" type="submit" onclick="return validation()">Signup</button>
+                        </div>
+            </form>
+            <div class="mt-3">
+                <p class="mb-0  text-center">Already have an account? <a href="/signin" class="text-primary fw-bold"
+                        style="text-decoration: none;">Sign
+                        In</a></p>
             </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control border border-primary" name="email" id="email" aria-describedby="emailHelp" onkeyup="validEmail()">
-                <span id="emails" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Mobile Number</label>
-                <input type="number" class="form-control border border-primary" name="mobile" id="phone" aria-describedby="emailHelp" onkeyup="validPhone()">
-                <span id="phones" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control border border-primary" name="password" id="password" onkeyup="validPassowrd()">
-                <span id="passwords" class="text-danger"></span>
-            </div>
-            <p class="small"><a class="text-primary" href="forget-password">Forgot password?</a></p>
-            <div class="d-grid">
-                <button class="btn btn-primary" type="submit" onclick="return validation()">Signup</button>
-            </div>
-        </form>
-        <div class="mt-3">
-            <p class="mb-0  text-center">Already have an account?  <a href="/signin"
-                    class="text-primary fw-bold" style="text-decoration: none;">Sign
-                    In</a></p>
         </div>
     </div>
-</div>
 
 
 
     <script>
-        
+
 
         // validation
 
@@ -63,9 +69,9 @@
             }
             Email.innerHTML = null
             return true
-        }       
+        }
         function validName() {
-            
+
             const name = document.getElementById('name').value;
             if (name == "") {
                 Name.innerHTML = 'Enter your Name'
@@ -75,14 +81,14 @@
                 Name.innerHTML = 'Numbers and symbols are not allowed'
                 return false
             }
-            if(name.length < 3){
+            if (name.length < 3) {
                 Name.innerHTML = "Name must be three characters long"
                 return false
             }
             Name.innerHTML = null
             return true
         }
-        
+
         function validPhone() {
             const phone = document.getElementById('phone').value
             if (phone == "") {
@@ -112,11 +118,11 @@
         function validation() {
             if (!validEmail() && !validName() && !validPassowrd() && !validPhone()) {
                 return false
-            } else if (!validEmail() || !validName() || !validPassowrd() || !validPhone() ) {
+            } else if (!validEmail() || !validName() || !validPassowrd() || !validPhone()) {
                 return false
-            }else { return true }
+            } else { return true }
         }
     </script>
 
 
-<%- include('./partials/footer.ejs') %> 
+    <%- include('./partials/footer.ejs') %>

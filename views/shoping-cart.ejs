@@ -1,4 +1,5 @@
 <%- include('./partials/header.ejs') %>
+<link rel="stylesheet" href="/css/shopping-cart.css">
 	<%- include('./partials/user-header.ejs') %>
 
 
@@ -8,6 +9,7 @@
 
 		</div>
 
+		<% if(total !=0){ %>
 
 		<!-- Shoping Cart -->
 		<form class="bg0 p-t-75 p-b-85">
@@ -150,19 +152,47 @@
 								</div>
 							</div>
 
-							<% if(total !=0){ %>
+							
 								<a href="/checkout"
 									class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
 									Proceed to Checkout
 								</a>
-								<% } %>
-
-
 						</div>
 					</div>
 				</div>
 			</div>
 		</form>
+
+		<% }else{ %>
+			<div class="container-fluid  mt-100">
+				<div class="row">
+				
+				    <div class="col-md-12">
+				   
+						   <div class="card">
+					   <div class="card-header">
+					   </div>
+					   <div class="card-body cart">
+							   <div class="col-sm-12 empty-cart-cls text-center">
+								<img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3" 
+								  id="cartEmptyIcon">
+								   <h3><strong>Your Cart is Empty</strong></h3>
+								   <h4>Add something to make me happy :)</h4>
+								   <a href="/" class="btn btn-primary cart-btn-transform m-3" data-abc="true">continue shopping</a>
+								   
+							   
+							   </div>
+					   </div>
+			   </div>
+					   
+				   
+				   </div>
+				
+				</div>
+			   
+			   </div>
+
+		<% } %> 
 
 
 

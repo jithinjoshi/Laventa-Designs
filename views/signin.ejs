@@ -1,6 +1,7 @@
 <%- include('./partials/admin-header.ejs')  %> 
         <div class="vh-100 d-flex justify-content-center align-items-center ">
             <div class="col-md-5 p-5 shadow-sm border rounded-5 border-primary bg-white">
+                <h4 class="text-center mb-2 text-secondary">Laventa Designs</h4>
                 <h2 class="text-center mb-4 text-primary">Login Here</h2>
                 <form method="post" action="/signin">
                     <% if(message.length >0){ %>
@@ -16,7 +17,6 @@
                         <input type="password" name="password" class="form-control border border-primary" id="password" onkeyup="validPassowrd()">
                         <span id="passwords" class="text-danger"></span>
                     </div>
-                    <p class="small"><a class="text-primary" href="forget-password.html">Forgot password?</a></p>
                     <div class="d-grid">
                         <button class="btn btn-primary" type="submit" onclick="return validation()">Login</button>
                     </div>
